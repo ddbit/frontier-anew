@@ -10,9 +10,12 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
  });
 
 
- exports.stats = functions.https.onRequest((request, response) => {
+
+exports.stats = functions.https.onRequest((request, response) => {
     functions.logger.info("Stats 30 days!", {structuredData: true}); 
     response.setHeader("Access-Control-Allow-Origin","*");
     var ticker = request.query.ticker;
-    response.send({"x":ticker});
+    stats(ticker).then(data=>response.send(data));
+    //response.send(await stats(ticker));
  });
+
