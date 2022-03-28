@@ -1,6 +1,6 @@
 const {restClient} = require("@polygon.io/client-js");
 const { variance } = require("simple-statistics");
-
+const {polygonKey} = require("./credentials");
 
 
 sub = function (a,b){
@@ -26,7 +26,7 @@ exports.shift=shift;
 
 
 getPrices = async function (ticker){
-    const api = restClient("who5oAF5P5GAYuy8pjWZ3dC47a9rTOP5");
+    const api = restClient(polygonKey);
     let to = new Date();
     let from = ((date) => {
         date.setDate(to.getDate() - 30);

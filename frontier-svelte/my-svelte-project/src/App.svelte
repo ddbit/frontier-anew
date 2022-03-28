@@ -2,7 +2,7 @@
 	import { onMount } from "svelte";
 	var records=[];
 	onMount(async () => {
-	  records = await fetch("https://us-central1-frontier-eb43f.cloudfunctions.net/helloWorld")
+	  records = await fetch("https://us-central1-frontier-eb43f.cloudfunctions.net/helloWorld?x=davide")
 	  records = records.json(); 
 	  console.log(records);
 	});
@@ -11,12 +11,11 @@
 
 <main>
 	{#await records then records}
-		{#each records as r}
-		<div>
-		<p>{r.a}</p>
-		</div>
-	  {/each}	
 		
+		<div>
+		<p>Hello {records.x}</p>
+		</div>
+	  	
 			
 	{/await}
 </main>
