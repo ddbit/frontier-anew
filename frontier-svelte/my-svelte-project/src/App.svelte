@@ -1,19 +1,23 @@
 <script>
-	import { onMount } from "svelte";
-	var records=[];
+	import { onMount, tick } from "svelte";
+	var response={};
+	const ticker = "X:BTCUSD";
 	onMount(async () => {
-	  records = await fetch("https://us-central1-frontier-eb43f.cloudfunctions.net/helloWorld?x=davide")
-	  records = records.json(); 
-	  console.log(records);
+	  response = await fetch("https://us-central1-frontier-eb43f.cloudfunctions.net/stats?ticker="+ticker);
+	  response = response.json(); 
+	  console.log(response);
 	});
 </script>
 	
 
 <main>
-	{#await records then records}
-		
+	{#await response then response}
+		<h1>{ticker}</h1>
 		<div>
-		<p>Hello {records.x}</p>
+			<p>OPEN  :{response.opening}</p>
+			<p>CLOSE :{response.closing}</p>
+			<p>RETURN:{response.return}</p>
+			<p>STDEV :{response.stdev}</p>
 		</div>
 	  	
 			
