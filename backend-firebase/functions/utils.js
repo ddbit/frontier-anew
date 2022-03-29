@@ -25,7 +25,7 @@ exports.shift=shift;
 
 
 
-getPrices = async function (ticker){
+priceHistory = async function (ticker){
     const api = restClient(polygonKey);
     let to = new Date();
     let from = ((date) => {
@@ -52,14 +52,21 @@ getPrices = async function (ticker){
    );
    
    let close = [];
+   let times = [];
    response.results.forEach(r => {
-       //console.log(r.c);
+       //console.log(r);
        close.push(r.c);
+       times.push(r.t);
    });
    
-    return close;   
+    return {
+        "prices": close,
+        "times": times,
+        "from":from,
+        "to":to
+    };   
    }
-exports.getPrices=getPrices;
+exports.priceHistory=priceHistory;
 
 
 getReturns = function (prices){
@@ -70,18 +77,23 @@ getReturns = function (prices){
 exports.getReturns=getReturns;
 
 stats = async function(ticker){
-    prices = await getPrices(ticker);
+    history = await priceHistory(ticker);
+    prices = history.prices;
     closing = prices[prices.length-1];
     opening = prices[0];
     returns = await getReturns(prices);
     stdev = Math.sqrt(variance(returns));
 
     return {
+        "from":history.from,
+        "to":history.to,
+        "length":prices.length,
         "opening":opening,
         "closing":closing,
         "return": (closing-opening)/opening,
         "stdev": stdev,
-        "prices":prices
+        "prices":prices,
+        "times": history.times
     }
 
 }

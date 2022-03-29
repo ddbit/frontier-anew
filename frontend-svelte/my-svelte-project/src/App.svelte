@@ -1,5 +1,6 @@
 <script>
 	import { onMount, tick } from "svelte";
+import Chart from "./Chart.svelte";
 	var response={};
 	const ticker = "X:BTCUSD";
 	onMount(async () => {
@@ -7,10 +8,12 @@
 	  response = response.json(); 
 	  console.log(response);
 	});
+
+
 </script>
-	
 
 <main>
+
 	{#await response then response}
 		<h1>{ticker}</h1>
 		<div>
@@ -19,6 +22,7 @@
 			<p>RETURN:{response.return}</p>
 			<p>STDEV :{response.stdev}</p>
 		</div>
+		<Chart></Chart>
 	  	
 			
 	{/await}
