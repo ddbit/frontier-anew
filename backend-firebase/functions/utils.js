@@ -83,7 +83,13 @@ stats = async function(ticker){
     opening = prices[0];
     returns = await getReturns(prices);
     stdev = Math.sqrt(variance(returns));
+    points = [];
 
+    for(i=0;i<prices.length;i++) points.push({
+        time:history.times[i],
+        price:prices[i]
+    });
+    
     return {
         "from":history.from,
         "to":history.to,
@@ -92,8 +98,7 @@ stats = async function(ticker){
         "closing":closing,
         "return": (closing-opening)/opening,
         "stdev": stdev,
-        "prices":prices,
-        "times": history.times
+        "points": points
     }
 
 }

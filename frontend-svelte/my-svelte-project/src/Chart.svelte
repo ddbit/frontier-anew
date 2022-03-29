@@ -1,6 +1,14 @@
 <script>
 	import { scaleLinear } from 'd3-scale';
-	import points from './data.js';
+	//import points from './data.js';
+    export let points;
+    console.log("dopo "+ JSON.stringify(points));
+    if (points === undefined) points = [{x:0,y:0},{x:1,y:1}];
+
+    points.forEach(element => {
+        element.x=element.time;
+        element.y=element.price;
+    });
 
 	const yTicks = [0, 2, 4, 6, 8];
 	const xTicks = [1980, 1990, 2000, 2010];
