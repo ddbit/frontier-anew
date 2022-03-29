@@ -4,14 +4,20 @@
     export let points;
     console.log("dopo "+ JSON.stringify(points));
     if (points === undefined) points = [{x:0,y:0},{x:1,y:1}];
+    let y=[];
+    const len = points.length;
 
-    points.forEach(element => {
-        element.x=element.time;
-        element.y=element.price;
-    });
+    for(let i=0;i<points.length;i++){
+        points[i].y=points[i].price;
+        y.push(points[i].y);
+        points[i].x=i-len+1;
+    }
 
-	const yTicks = [0, 2, 4, 6, 8];
-	const xTicks = [1980, 1990, 2000, 2010];
+
+	const yTicks = [0,Math.min.apply(null,y),Math.max.apply(null,y)];
+    //const yTicks = [30000,50000];
+ 
+	const xTicks = [1-len,Math.round(len/2) - len, 0];
 	const padding = { top: 20, right: 15, bottom: 20, left: 25 };
 
 	let width = 500;
@@ -35,7 +41,6 @@
 	}
 </script>
 
-<h2>Arctic sea ice minimum</h2>
 
 <div class="chart" bind:clientWidth={width} bind:clientHeight={height}>
 	<svg>
@@ -65,7 +70,6 @@
 	</svg>
 </div>
 
-<p>Average September extent. Source: <a href='https://climate.nasa.gov/vital-signs/arctic-sea-ice/'>NSIDC/NASA</a></p>
 
 <style>
 	.chart, h2, p {

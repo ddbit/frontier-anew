@@ -17,16 +17,16 @@
 </script>
 
 <main>
-	<Hello name="davide"></Hello>
 	{#await response then response}
 		<h1>{ticker}</h1>
+		<h2>Last 30 days analysis</h2>
 		<div>
 			<p>OPEN  :{response.opening}</p>
 			<p>CLOSE :{response.closing}</p>
 			<p>RETURN:{response.return}</p>
-			<p>STDEV :{response.stdev}</p>
+			<p>VOLATILITY :{response.stdev}</p>
 		</div>
-		<p>{JSON.stringify(response.points)}</p>
+		
 		<Chart points={response.points}></Chart>
 	  	
 			
