@@ -3,6 +3,9 @@
 </script>
 
 <main>
+	<div style="background-color: lightcyan; height:250px; width:100%">
+
+	</div>
 	<AssetCard ticker="X:BTCUSD"></AssetCard>
 	<AssetCard ticker="AAPL"></AssetCard>
 	<AssetCard ticker="X:ETHUSD"></AssetCard>
