@@ -1,9 +1,9 @@
 <script>
 	import { scaleLinear } from 'd3-scale';
-	import points from './data.js';
-    //export let points;
+	//import points from './data.js';
+    export let points;
     //console.log("dopo "+ JSON.stringify(points));
-    //if (points === undefined) points = [{x:0,y:0},{x:1,y:1}];
+    if (points === undefined) points = [{x:0,y:0},{x:1,y:1}];
     let y=[];
     const len = points.length;
 
