@@ -13,11 +13,9 @@
 			this box is empty for now...
 		</center>
 	</div>
-	<AssetCard ticker="X:BTCUSD"></AssetCard>
-	<AssetCard ticker="AAPL"></AssetCard>
-	<AssetCard ticker="X:ETHUSD"></AssetCard>
-	<AssetCard ticker="MSFT"></AssetCard>
+	<AssetCard ticker="X:BTCUSD" name="Bitcoin"></AssetCard>
+	<AssetCard ticker="IAU" name="iShares Gold Fund"></AssetCard>
+	<AssetCard ticker="BNO" name="Brent Oil Fund"></AssetCard>
+	<AssetCard ticker="AAPL" name="Apple Inc."></AssetCard>
 	<br>
-	<AssetCard ticker="AMZN"></AssetCard>
-	<AssetCard ticker="X"></AssetCard>
 </main>

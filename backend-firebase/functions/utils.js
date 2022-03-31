@@ -1,5 +1,6 @@
 const {restClient} = require("@polygon.io/client-js");
-const { variance } = require("simple-statistics");
+const { machineLearning } = require("firebase-admin");
+const { variance, mean } = require("simple-statistics");
 const {polygonKey} = require("./credentials");
 
 
@@ -14,7 +15,7 @@ div = function (a,b){
 shift = function (a){
     //padded with last val
     let r = a.slice(1);
-    console.log(r);
+    //console.log(r);
     r.push(a[a.length - 1]);
     return r;
 }
@@ -24,6 +25,22 @@ exports.div=div;
 exports.shift=shift;
 
 
+priceAtDate=async function(ticker, date){
+    const api = restClient(polygonKey);
+    let from = date;
+    let to = date;
+    var response = //await api.forex.previousClose("C:EURUSD");
+    await api.crypto.aggregates(
+       ticker,
+       1,
+       "day",
+       from,
+       to,
+       true
+   );
+   return response;
+}
+exports.priceAtDate=priceAtDate;
 
 priceHistory = async function (ticker){
     const api = restClient(polygonKey);
@@ -70,11 +87,13 @@ exports.priceHistory=priceHistory;
 
 
 getReturns = function (prices){
-
-    //prices = await exports.getPrices(ticker);
     return div(sub(shift(prices),prices),prices);
 }
 exports.getReturns=getReturns;
+
+getAverageReturn = (prices) => mean(getReturns(prices));
+exports.getAverageReturn=getAverageReturn;
+
 
 stats = async function(ticker){
     history = await priceHistory(ticker);
@@ -103,3 +122,13 @@ stats = async function(ticker){
 
 }
 exports.stats = stats;
+
+
+main=async function(){
+    console.log(await priceAtDate("AAPL","2020-10-16"));
+    console.log(await priceAtDate("AAPL","2020-10-17"));
+    console.log(await priceAtDate("AAPL","2020-10-18"));
+    console.log(await priceAtDate("AAPL","2020-10-19"));
+}
+
+main ();

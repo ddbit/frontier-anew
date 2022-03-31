@@ -3,7 +3,7 @@
     import Chart from "./Chart.svelte";
 	var response={};
 
-	export let ticker;
+	export let ticker, name;
 	
 	onMount(async () => {
 	  response = await fetch("https://us-central1-frontier-eb43f.cloudfunctions.net/stats?ticker="+ticker);
@@ -18,7 +18,8 @@
 <div class="card">
 	{#await response then response}
 		<h1>{ticker}</h1>
-		<h2>Last 30 days analysis</h2>
+        <h3>{name}</h3>
+		<h4>Last 30 days analysis</h4>
 		<div>
 			<p>OPEN  :{response.opening}</p>
 			<p>CLOSE :{response.closing}</p>
