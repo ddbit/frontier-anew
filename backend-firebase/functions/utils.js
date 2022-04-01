@@ -129,11 +129,3 @@ stats = async function(ticker){
 }
 exports.stats = stats;
 
-
-main=async function(){
-    console.log(await priceAtDate("AAPL","2020-10-16"));
-    console.log(await priceAtDate("AAPL","2020-10-17"));
-    console.log(await priceHistory("AAPL"))
-}
-
-main ();
