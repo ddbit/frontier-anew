@@ -1,7 +1,7 @@
 const {restClient} = require("@polygon.io/client-js");
 const { variance, mean } = require("simple-statistics");
 const {polygonKey} = require("./credentials");
-
+const fs = require('fs').promises;
 
 sub = function (a,b){
     return a.map((e,i) => e - b[i]);
@@ -48,7 +48,45 @@ priceAtDate=async function(ticker, date){
 }
 exports.priceAtDate=priceAtDate;
 
+const fromCache = async function(ticker){
+    let filename="./"+ticker+".json";
+    console.log("reading "+filename);
+    try{
+        let fileBuffer = await fs.readFile(filename);
+        console.log(fileBuffer.toString());
+        obj=JSON.parse(fileBuffer);
+        return obj;
+    }
+    catch(e){
+        return undefined;
+    }
+
+}
+
+const toCache=function(jsonObj){
+    var jsonContent = JSON.stringify(jsonObj);
+    fs.writeFile("./"+jsonObj.ticker+".json", jsonContent, 'utf8',function (err) {
+        if (err) {
+            console.log("An error occured while writing JSON Object to File.");
+            return console.log(err);
+        }
+     
+        console.log("JSON file has been saved.");
+    });
+}
+
 priceHistory = async function (ticker){
+
+    let result = await fromCache(ticker);
+    console.log("**"+result);
+    if(result!==undefined) {
+        console.log("cache fetch");
+        return result;
+    }
+        
+    
+    console.log("cache miss");
+
     const api = restClient(polygonKey);
     let to = new Date();
     let from = ((date) => {
@@ -82,12 +120,18 @@ priceHistory = async function (ticker){
        times.push((new Date(r.t)).toISOString().substring(0,10));
    });
    
-    return {
+    let obj = {
+        "ticker": ticker,
         "prices": close,
         "times": times,
         "from":from,
         "to":to
-    };   
+    };  
+
+    await toCache(obj);
+    
+    return obj;
+
    }
 exports.priceHistory=priceHistory;
 
