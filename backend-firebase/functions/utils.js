@@ -49,7 +49,7 @@ priceAtDate=async function(ticker, date){
 exports.priceAtDate=priceAtDate;
 
 const fromCache = async function(ticker){
-    let filename="./"+ticker+".json";
+    let filename=".cache/"+ticker+".json";
     console.log("reading "+filename);
     try{
         let fileBuffer = await fs.readFile(filename);
@@ -65,7 +65,7 @@ const fromCache = async function(ticker){
 
 const toCache=function(jsonObj){
     var jsonContent = JSON.stringify(jsonObj);
-    fs.writeFile("./"+jsonObj.ticker+".json", jsonContent, 'utf8',function (err) {
+    fs.writeFile(".cache/"+jsonObj.ticker+".json", jsonContent, 'utf8',function (err) {
         if (err) {
             console.log("An error occured while writing JSON Object to File.");
             return console.log(err);
