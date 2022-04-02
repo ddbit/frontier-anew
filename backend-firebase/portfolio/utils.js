@@ -60,7 +60,6 @@ const fromCache = async function(ticker){
     catch(e){
         return undefined;
     }
-
 }
 
 const toCache=function(jsonObj){
