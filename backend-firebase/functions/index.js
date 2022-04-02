@@ -1,5 +1,5 @@
 const functions = require("firebase-functions");
-const {stats} = require(".portfolio/utils");
+const {stats} = require("../portfolio/utils.js");
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //

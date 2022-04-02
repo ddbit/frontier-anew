@@ -61,23 +61,22 @@ const fromCache = async function(ticker){
         return undefined;
     }
 }
+exports.fromCache=fromCache;
 
-const toCache=function(jsonObj){
+const toCache=async function(jsonObj){
     var jsonContent = JSON.stringify(jsonObj);
-    fs.writeFile(".cache/"+jsonObj.ticker+".json", jsonContent, 'utf8',function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.");
-            return console.log(err);
-        }
-     
-        console.log("JSON file has been saved.");
-    });
+    try{
+        return await fs.writeFile(".cache/"+jsonObj.ticker+".json", jsonContent, 'utf8');
+    }catch(e){
+        console.log("An error occured while writing to cache");
+    }
 }
+exports.toCache=toCache;
 
 priceHistory = async function (ticker){
 
     let result = await fromCache(ticker);
-    console.log("**"+result);
+    
     if(result!==undefined) {
         console.log("cache fetch");
         return result;
@@ -93,13 +92,7 @@ priceHistory = async function (ticker){
         return date;
        }
      )(new Date());
-   
-    
-    //console.log(to.toISOString()); 
-    //console.log(from.toISOString());
-    // Output: Tue Jul 21 2020 10:01:14 GMT+0100 (UK Daylight Time) 
-   
-   
+
    
     var response = //await api.forex.previousClose("C:EURUSD");
     await api.crypto.aggregates(
