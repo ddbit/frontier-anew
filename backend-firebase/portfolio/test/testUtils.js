@@ -1,7 +1,7 @@
 // test/converter.js
 
 var {expect}    = require("chai");
-var {sub,div,shift,fromCache,toCache} = require("../utils");
+var {sub,div,shift,fromCache,toCache, getReturns} = require("../utils");
 
 describe("Utils", function() {
     it("element wise subtract of arrays", function() {
@@ -38,6 +38,14 @@ describe("Utils", function() {
         let cached = await fromCache("y");
         expect(cached).to.equal(undefined);
     
+    });
+
+    it("calculate returns from prices", async function() {
+        let prices = [100,110,121]
+        expect(getReturns(prices)).to.deep.equal([0.1,0.1,0]);
+    
+        prices = [100,90,81]
+        expect(getReturns(prices)).to.deep.equal([-0.1,-0.1,0]);
     });
 
 });

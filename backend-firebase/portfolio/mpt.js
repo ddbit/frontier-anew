@@ -1,18 +1,14 @@
 //Modern Portfolio Theory module
-const { tickers } = require("@polygon.io/client-js/lib/rest/reference/tickers");
-const {cov,variance,mean} = require("simple-statistics");
 var DataFrame = require('dataframe-js').DataFrame
-const {priceHistory} = require("./utils");
+const {priceHistory,getReturns} = require("./utils");
 
 
 
 class Portfolio{
-    constructor(initialBalance,tickers,days){
+    constructor(tickers,weights,days){
         this.days=(days == undefined)?30:days;
-        this.weights = Array(tickers.length);
-        for(let i=0;i<tickers.length;i++) this.weights[i] = 1/tickers.length;
+        this.weights = weights;
         this.tickers=tickers;
-        this.initialBalance=initialBalance;
         this.initTime();
     }
 
@@ -29,9 +25,10 @@ class Portfolio{
         this.data = new DataFrame({
             time: t // <------ Time column
         }, ['time']);
+
     }
 
-    allocate = async function () {
+    fetchPriceHistory = async function () {
         for(let k=0;k<this.tickers.length;k++){
             let ticker = this.tickers[k];
             console.log(ticker);
@@ -39,12 +36,14 @@ class Portfolio{
             
             let df = new DataFrame({
                 time: h.times, // <------ Time column
-                ticker: h.prices
+                ticker: getReturns(h.prices)
             }, ['time',ticker]);
             this.data = this.data.join(df,"time");
 
         }
+
     }
+
 
 }
 
@@ -76,12 +75,12 @@ const testDF = async function(){
 
 
 const testPortfolio=async function(){
-    p = new Portfolio(1000000,["X:BTCUSD","IAU","BNO"]);
-    console.log(p.initialBalance);
+    p = new Portfolio(["X:BTCUSD","IAU","BNO"],[1/3,1/3,1/3]);
     console.log(p.weights);
     console.log(p.days);
-    await p.allocate();
+    await p.fetchPriceHistory();
     p.data.show();
+    //first
 }
 
 testPortfolio();
