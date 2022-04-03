@@ -10,6 +10,7 @@ class Portfolio{
         this.weights = weights;
         this.tickers=tickers;
         this.initTime();
+        this.aum=100;
     }
 
 
@@ -28,7 +29,7 @@ class Portfolio{
 
     }
 
-    fetchPriceHistory = async function () {
+    fetchHistory = async function () {
         for(let k=0;k<this.tickers.length;k++){
             let ticker = this.tickers[k];
             console.log(ticker);
@@ -41,6 +42,9 @@ class Portfolio{
             this.data = this.data.join(df,"time");
 
         }
+        //df4=df3.map(row => row.set('out', dot(row.toArray().slice(1),weights)));
+        this.data=
+        this.data.map(row => row.set('return', dot(row.toArray().slice(1),this.weights)));
 
     }
 
@@ -53,34 +57,40 @@ class Portfolio{
 const testDF = async function(){
 // From a dictionnary (Hash)
 
-    h1 = await priceHistory("X:BTCUSD");
-    h2 = await priceHistory("AAPL");
-
+    //h1 = await priceHistory("X:BTCUSD");
+    //h2 = await priceHistory("AAPL");
+    times = [1,2,3,4,5];
+    weights = [.6,.4];
+    X=[2,2,2,3,3];
+    Y=[1,1,2,2,2];
     const df = new DataFrame({
     
-    time: h1.times, // <------ A column
-    bitcoin: h1.prices,
-    }, ['time', 'bitcoin']);
+    time: times, // <------ A column
+    X: X,
+    }, ['time', 'X']);
 
     const df2 = new DataFrame({
     
-        time: h2.times, // <------ A column
-        aapl: h2.prices,
-        }, ['time', 'aapl']);
+        time: times, // <------ A column
+        Y: Y,
+        }, ['time', 'Y']);
     df.show();
     df2.show();
     df3=df.join(df2,"time");
     df3.show();
+    df4=df3.map(row => row.set('out', dot(row.toArray().slice(1),weights)));
+    df4.show();
 }
 
 
 const testPortfolio=async function(){
-    p = new Portfolio(["X:BTCUSD","IAU","BNO"],[1/3,1/3,1/3]);
+    p = new Portfolio(["X:BTCUSD","IAU","BNO"],[0,1,0]);
     console.log(p.weights);
     console.log(p.days);
-    await p.fetchPriceHistory();
+    await p.fetchHistory();
     p.data.show();
     //first
 }
 
 testPortfolio();
+//testDF();
