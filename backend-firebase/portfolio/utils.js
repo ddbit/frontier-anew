@@ -176,3 +176,13 @@ stats = async function(ticker){
 }
 exports.stats = stats;
 
+calculateAUM = function(returns, initialBalance){
+    let aum = Array();
+
+    aum.push((1 + returns[0]) * initialBalance);
+    for(var i=1;i<returns.length;i++){
+        aum.push((1 + returns[i]) * aum[i-1]);
+    }
+    return aum;
+}
+exports.calculateAUM = calculateAUM;

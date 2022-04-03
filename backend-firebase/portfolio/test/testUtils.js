@@ -1,7 +1,7 @@
 // test/converter.js
 
 var {expect}    = require("chai");
-var {sub,div,shift,fromCache,toCache, getReturns} = require("../utils");
+var {sub,div,shift,fromCache,toCache, getReturns, calculateAUM} = require("../utils");
 
 describe("Utils", function() {
     it("element wise subtract of arrays", function() {
@@ -64,5 +64,14 @@ describe("Utils", function() {
         prices = [100,90,81]
         expect(getReturns(prices)).to.deep.equal([-0.1,-0.1,0]);
     });
+
+    it("calculate aum over time from returns", async function() {
+        let returns = [0.05,0.2,0.2];
+        let aum = calculateAUM(returns,100);
+        console.log(aum);
+        expect(aum).to.deep.equal([105,126,151.2]);
+
+    });
+
 
 });

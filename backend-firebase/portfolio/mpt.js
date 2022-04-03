@@ -4,16 +4,28 @@ const {priceHistory,getReturns} = require("./utils");
 
 
 
+column = function(df, colName){
+    let a = df.select(colName).toArray();
+    let b = [];
+    a.forEach(x=>b.push(x[0]));
+    return b;
+}
+
+
 class Portfolio{
     constructor(tickers,weights,days){
         this.days=(days == undefined)?30:days;
         this.weights = weights;
         this.tickers=tickers;
         this.initTime();
-        this.aum=100;
+        this.initialBalance=100;
     }
 
 
+
+    calculateStdevOfReturns=function(){
+        return this.data.stat.sd("return");
+    }
 
     initTime=function(){
         let t = [];
@@ -80,6 +92,7 @@ const testDF = async function(){
     df3.show();
     df4=df3.map(row => row.set('out', dot(row.toArray().slice(1),weights)));
     df4.show();
+    console.log(column(df4,"Y"));
 }
 
 
@@ -89,8 +102,11 @@ const testPortfolio=async function(){
     console.log(p.days);
     await p.fetchHistory();
     p.data.show();
+    console.log(p.calculateStdevOfReturns());
+
+
     //first
 }
 
-testPortfolio();
-//testDF();
+//testPortfolio();
+testDF();
