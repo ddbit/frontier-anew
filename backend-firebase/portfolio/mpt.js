@@ -1,6 +1,6 @@
 //Modern Portfolio Theory module
 var DataFrame = require('dataframe-js').DataFrame
-const {priceHistory,getReturns} = require("./utils");
+const {priceHistory,getReturns,calculateAUM} = require("./utils");
 
 
 
@@ -19,12 +19,8 @@ class Portfolio{
         this.tickers=tickers;
         this.initTime();
         this.initialBalance=100;
-    }
-
-
-
-    calculateStdevOfReturns=function(){
-        return this.data.stat.sd("return");
+        this.stdev=0;
+        this.aum = [];
     }
 
     initTime=function(){
@@ -57,7 +53,8 @@ class Portfolio{
         //df4=df3.map(row => row.set('out', dot(row.toArray().slice(1),weights)));
         this.data=
         this.data.map(row => row.set('return', dot(row.toArray().slice(1),this.weights)));
-
+        this.stdev = this.data.stat.sd("return");
+        this.aum=calculateAUM(column(this.data, "return"),this.initialBalance);
     }
 
 
@@ -97,16 +94,17 @@ const testDF = async function(){
 
 
 const testPortfolio=async function(){
-    p = new Portfolio(["X:BTCUSD","IAU","BNO"],[0,1,0]);
+    p = new Portfolio(["X:BTCUSD","IAU","BNO"],[1,0,0]);
     console.log(p.weights);
     console.log(p.days);
     await p.fetchHistory();
     p.data.show();
-    console.log(p.calculateStdevOfReturns());
+    console.log(p.stdev);
+    console.log(p.aum);
 
 
     //first
 }
 
-//testPortfolio();
-testDF();
+testPortfolio();
+//testDF();
