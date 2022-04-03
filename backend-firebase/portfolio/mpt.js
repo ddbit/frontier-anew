@@ -59,7 +59,7 @@ class Portfolio{
 
 
 }
-
+exports.Portfolio = Portfolio;
 
 
 
