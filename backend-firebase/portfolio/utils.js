@@ -11,6 +11,17 @@ div = function (a,b){
     return a.map((e,i) => e / b[i]);
 }
 
+mul = function (a,b){
+    return a.map((e,i) => e * b[i]);
+}
+
+dot = function(a,b){
+    let x = mul(a,b);
+    return x.reduce((s,x)=>s+x)
+}
+
+
+
 shift = function (a){
     //padded with last val
     let r = a.slice(1);
@@ -165,3 +176,13 @@ stats = async function(ticker){
 }
 exports.stats = stats;
 
+calculateAUM = function(returns, initialBalance){
+    let aum = Array();
+
+    aum.push((1 + returns[0]) * initialBalance);
+    for(var i=1;i<returns.length;i++){
+        aum.push((1 + returns[i]) * aum[i-1]);
+    }
+    return aum;
+}
+exports.calculateAUM = calculateAUM;

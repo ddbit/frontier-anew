@@ -1,7 +1,7 @@
 // test/converter.js
 
 var {expect}    = require("chai");
-var {sub,div,shift,fromCache,toCache} = require("../utils");
+var {sub,div,shift,fromCache,toCache, getReturns, calculateAUM} = require("../utils");
 
 describe("Utils", function() {
     it("element wise subtract of arrays", function() {
@@ -18,6 +18,23 @@ describe("Utils", function() {
         expect(div(a,b)).to.deep.equal(c);
     
     });
+
+    it("element wise mul of arrays", function() {
+        let a = [1,2,3,4,3];
+        let b = [1,1,1,2,5];
+        let c = [1,2,3,8,15];
+        expect(mul(a,b)).to.deep.equal(c);
+    
+    });
+
+    it("dot product between 2 arrays", function() {
+        let a = [1,2,3,4,3];
+        let b = [1,1,1,2,5];
+        let c = 29;
+        expect(dot(a,b)).to.deep.equal(c);
+    
+    });
+
     it("shift of arrays by one", function() {
         let a = [1,2,3,4,3];
         let b = [2,3,4,3,3];
@@ -39,5 +56,22 @@ describe("Utils", function() {
         expect(cached).to.equal(undefined);
     
     });
+
+    it("calculate returns from prices", async function() {
+        let prices = [100,110,121]
+        expect(getReturns(prices)).to.deep.equal([0.1,0.1,0]);
+    
+        prices = [100,90,81]
+        expect(getReturns(prices)).to.deep.equal([-0.1,-0.1,0]);
+    });
+
+    it("calculate aum over time from returns", async function() {
+        let returns = [0.05,0.2,0.2];
+        let aum = calculateAUM(returns,100);
+        console.log(aum);
+        expect(aum).to.deep.equal([105,126,151.2]);
+
+    });
+
 
 });

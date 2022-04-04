@@ -1,22 +1,27 @@
 //Modern Portfolio Theory module
-const { tickers } = require("@polygon.io/client-js/lib/rest/reference/tickers");
-const {cov,variance,mean} = require("simple-statistics");
 var DataFrame = require('dataframe-js').DataFrame
-const {priceHistory} = require("./utils");
+const {priceHistory,getReturns,calculateAUM} = require("./utils");
 
+
+
+column = function(df, colName){
+    let a = df.select(colName).toArray();
+    let b = [];
+    a.forEach(x=>b.push(x[0]));
+    return b;
+}
 
 
 class Portfolio{
-    constructor(initialBalance,tickers,days){
+    constructor(tickers,weights,days){
         this.days=(days == undefined)?30:days;
-        this.weights = Array(tickers.length);
-        for(let i=0;i<tickers.length;i++) this.weights[i] = 1/tickers.length;
+        this.weights = weights;
         this.tickers=tickers;
-        this.initialBalance=initialBalance;
         this.initTime();
+        this.initialBalance=100;
+        this.stdev=0;
+        this.aum = [];
     }
-
-
 
     initTime=function(){
         let t = [];
@@ -29,9 +34,10 @@ class Portfolio{
         this.data = new DataFrame({
             time: t // <------ Time column
         }, ['time']);
+
     }
 
-    allocate = async function () {
+    fetchHistory = async function () {
         for(let k=0;k<this.tickers.length;k++){
             let ticker = this.tickers[k];
             console.log(ticker);
@@ -39,49 +45,66 @@ class Portfolio{
             
             let df = new DataFrame({
                 time: h.times, // <------ Time column
-                ticker: h.prices
+                ticker: getReturns(h.prices)
             }, ['time',ticker]);
             this.data = this.data.join(df,"time");
 
         }
+        //df4=df3.map(row => row.set('out', dot(row.toArray().slice(1),weights)));
+        this.data=
+        this.data.map(row => row.set('return', dot(row.toArray().slice(1),this.weights)));
+        this.stdev = this.data.stat.sd("return");
+        this.aum=calculateAUM(column(this.data, "return"),this.initialBalance);
     }
 
-}
 
+}
+exports.Portfolio = Portfolio;
 
 
 
 const testDF = async function(){
 // From a dictionnary (Hash)
 
-    h1 = await priceHistory("X:BTCUSD");
-    h2 = await priceHistory("AAPL");
-
+    //h1 = await priceHistory("X:BTCUSD");
+    //h2 = await priceHistory("AAPL");
+    times = [1,2,3,4,5];
+    weights = [.6,.4];
+    X=[2,2,2,3,3];
+    Y=[1,1,2,2,2];
     const df = new DataFrame({
     
-    time: h1.times, // <------ A column
-    bitcoin: h1.prices,
-    }, ['time', 'bitcoin']);
+    time: times, // <------ A column
+    X: X,
+    }, ['time', 'X']);
 
     const df2 = new DataFrame({
     
-        time: h2.times, // <------ A column
-        aapl: h2.prices,
-        }, ['time', 'aapl']);
+        time: times, // <------ A column
+        Y: Y,
+        }, ['time', 'Y']);
     df.show();
     df2.show();
     df3=df.join(df2,"time");
     df3.show();
+    df4=df3.map(row => row.set('out', dot(row.toArray().slice(1),weights)));
+    df4.show();
+    console.log(column(df4,"Y"));
 }
 
 
 const testPortfolio=async function(){
-    p = new Portfolio(1000000,["X:BTCUSD","IAU","BNO"]);
-    console.log(p.initialBalance);
+    p = new Portfolio(["X:BTCUSD","IAU","BNO"],[1,0,0]);
     console.log(p.weights);
     console.log(p.days);
-    await p.allocate();
+    await p.fetchHistory();
     p.data.show();
+    console.log(p.stdev);
+    console.log(p.aum);
+
+
+    //first
 }
 
 testPortfolio();
+//testDF();
