@@ -16,10 +16,9 @@
           weights
         );
 	  response = response.json();
-      response.aum = response.aum.map(
-          val=>new Object({"price":val, "time":0})
-      );
+      console.log("***");
       console.log(response);
+      
 
 	});
 
@@ -27,15 +26,15 @@
 </script>
 
 <div class="card">
-	{#await response then response}
+	{#await response then data}
 		<h1>{tickers}</h1>
         <h3>{weights}</h3>
 		<h4>Last 30 days analysis</h4>
 		<div>
-			<p>Volatility :{response.stdev}</p>
+			<p>Volatility :{data.stdev}</p>
 		</div>
 		
-		<Chart points={response.aum}></Chart>
+		<Chart y={data.aum} x={(data.aum===undefined)?undefined:data.aum.map((v,j)=>j - data.aum.length + 1)}></Chart>
 	  	
 			
 	{/await}
@@ -47,6 +46,7 @@
             width: 25%;
 			float: left;
             border: 1px solid #aaa;
+            background-color: rgb(224, 249, 244);
             border-radius: 2px;
             box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
             padding: 30px;

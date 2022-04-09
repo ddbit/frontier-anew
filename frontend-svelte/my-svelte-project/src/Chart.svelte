@@ -1,23 +1,24 @@
 <script>
 	import { scaleLinear } from 'd3-scale';
 	//import points from './data.js';
-    export let points;
-    //console.log("dopo "+ JSON.stringify(points));
-    if (points === undefined) points = [{x:0,y:0},{x:1,y:1}];
-    let y=[];
-    const len = points.length;
+    export let x,y;
+	let points=[{x:0,y:0}];
+    console.log("pippo");
+	var len;
 
-    for(let i=0;i<points.length;i++){
-        points[i].y=points[i].price;
-        y.push(points[i].y);
-        points[i].x=i-len+1;
-    }
-
-
+    if (y !== undefined) {
+		points=[];
+		if(x===undefined) x=y.map((v,j)=>j);
+		//console.log(x);
+		len = y.length;
+		for(let i=0;i<len;i++){
+			points.push({"x":x[i], "y":y[i]});
+		}
+	}
 	const yTicks = [0,Math.min.apply(null,y),Math.max.apply(null,y)];
     //const yTicks = [30000,50000];
  
-	const xTicks = [1-len,Math.round(len/2) - len, 0];
+	const xTicks = [Math.min.apply(null,x),Math.round(len/2) - len, Math.max.apply(null,x)];
 	const padding = { top: 20, right: 15, bottom: 20, left: 25 };
 
 	let width = 500;
