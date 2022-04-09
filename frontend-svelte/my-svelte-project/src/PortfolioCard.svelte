@@ -34,7 +34,7 @@
 			<p>Volatility :{data.stdev}</p>
 		</div>
 		
-		<Chart y={data.aum}></Chart>
+		<Chart y={data.aum} x={(data.aum===undefined)?undefined:data.aum.map((v,j)=>j - data.aum.length + 1)}></Chart>
 	  	
 			
 	{/await}
@@ -46,6 +46,7 @@
             width: 25%;
 			float: left;
             border: 1px solid #aaa;
+            background-color: rgb(224, 249, 244);
             border-radius: 2px;
             box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
             padding: 30px;
