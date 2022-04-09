@@ -1,14 +1,14 @@
 <script>
 	import { onMount, tick } from "svelte";
-import { dataset_dev } from "svelte/internal";
     import Chart from "./Chart.svelte";
+	import {baseurl} from "./config.js"
 	var response={};
 	var x=[];
 	export let ticker, name;
 	
 	onMount(async () => {
 	  //response = await fetch("https://us-central1-frontier-eb43f.cloudfunctions.net/stats?ticker="+ticker);
-	  response = await fetch("http://localhost:5001/frontier-eb43f/us-central1/history?ticker="+ticker); 
+	  response = await fetch(baseurl + "/history?ticker="+ticker); 
 	  response = response.json(); 
 
 	});

@@ -1,7 +1,6 @@
 <script>
 	import AssetCard from "./AssetCard.svelte";
-import Chart from "./Chart.svelte";
-import PortfolioCard from "./PortfolioCard.svelte";
+	import PortfolioCard from "./PortfolioCard.svelte";
 </script>
 
 <main>
