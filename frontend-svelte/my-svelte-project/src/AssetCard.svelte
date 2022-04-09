@@ -1,13 +1,14 @@
 <script>
 	import { onMount, tick } from "svelte";
+import { dataset_dev } from "svelte/internal";
     import Chart from "./Chart.svelte";
 	var response={};
-
+	var x=[];
 	export let ticker, name;
 	
 	onMount(async () => {
-	  response = await fetch("https://us-central1-frontier-eb43f.cloudfunctions.net/stats?ticker="+ticker);
-	  //response = await fetch("http://localhost:5001/frontier-eb43f/us-central1/stats?ticker="+ticker); 
+	  //response = await fetch("https://us-central1-frontier-eb43f.cloudfunctions.net/stats?ticker="+ticker);
+	  response = await fetch("http://localhost:5001/frontier-eb43f/us-central1/history?ticker="+ticker); 
 	  response = response.json(); 
 
 	});
@@ -16,18 +17,12 @@
 </script>
 
 <div class="card">
-	{#await response then response}
+	{#await response then data}
 		<h1>{ticker}</h1>
         <h3>{name}</h3>
 		<h4>Last 30 days analysis</h4>
-		<div>
-			<p>OPEN  :{response.opening}</p>
-			<p>CLOSE :{response.closing}</p>
-			<p>RETURN:{response.return}</p>
-			<p>VOLATILITY :{response.stdev}</p>
-		</div>
 		
-		<Chart points={response.points}></Chart>
+		<Chart y={data.prices} x={(data.prices===undefined)?undefined:data.prices.map((v,j)=>j - data.prices.length + 1)}></Chart>
 	  	
 			
 	{/await}

@@ -1,5 +1,6 @@
 <script>
 	import AssetCard from "./AssetCard.svelte";
+import Chart from "./Chart.svelte";
 import PortfolioCard from "./PortfolioCard.svelte";
 </script>
 
@@ -13,7 +14,7 @@ import PortfolioCard from "./PortfolioCard.svelte";
 			this box is empty for now...
 		</center>
 	</div>
-	<AssetCard ticker="IAU" name="iShares Gold Fund"></AssetCard>
-	<AssetCard ticker="BNO" name="Brent Oil Fund"></AssetCard>
+	<Chart y={[100,102,94]} x={[1,2,3]}></Chart>
+	<AssetCard ticker="BNO"></AssetCard>
 	<br>
 </main>

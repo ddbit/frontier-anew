@@ -1,5 +1,5 @@
 const functions = require("firebase-functions");
-const {stats} = require("../portfolio/utils.js");
+const {stats, priceHistory} = require("../portfolio/utils.js");
 const {Portfolio} = require("../portfolio/mpt.js");
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -19,6 +19,15 @@ exports.stats = functions.https.onRequest((request, response) => {
     stats(ticker).then(data=>response.send(data));
     //response.send(await stats(ticker));
  });
+
+ exports.history = functions.https.onRequest((request, response) => {
+    functions.logger.info("Prices 30 days!", {structuredData: true}); 
+    response.setHeader("Access-Control-Allow-Origin","*");
+    var ticker = request.query.ticker;
+    priceHistory(ticker).then(data=>response.send(data));
+    //response.send(await stats(ticker));
+ });
+
 
  exports.portfolio = functions.https.onRequest((request, response) => {
     functions.logger.info("Portfolio", {structuredData: true}); 
