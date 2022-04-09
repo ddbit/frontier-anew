@@ -8,7 +8,7 @@
 	
 	onMount(async () => {
 	  //response = await fetch("https://us-central1-frontier-eb43f.cloudfunctions.net/stats?ticker="+ticker);
-	  response = await fetch(baseurl + "/history?ticker="+ticker); 
+	  response = await fetch(baseurl + "/prices?ticker="+ticker); 
 	  response = response.json(); 
 
 	});

@@ -20,13 +20,16 @@ exports.stats = functions.https.onRequest((request, response) => {
     //response.send(await stats(ticker));
  });
 
- exports.history = functions.https.onRequest((request, response) => {
-    functions.logger.info("Prices 30 days!", {structuredData: true}); 
-    response.setHeader("Access-Control-Allow-Origin","*");
-    var ticker = request.query.ticker;
-    priceHistory(ticker).then(data=>response.send(data));
-    //response.send(await stats(ticker));
- });
+ 
+
+exports.prices = functions.https.onRequest((request, response) => {
+   functions.logger.info("Prices 30 days!", {structuredData: true}); 
+   response.setHeader("Access-Control-Allow-Origin","*");
+   var ticker = request.query.ticker;
+   priceHistory(ticker).then(data=>response.send(data));
+   //response.send(await stats(ticker));
+});
+
 
 
  exports.portfolio = functions.https.onRequest((request, response) => {

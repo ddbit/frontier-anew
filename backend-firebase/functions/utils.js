@@ -2,6 +2,9 @@ const {restClient} = require("@polygon.io/client-js");
 const { variance, mean } = require("simple-statistics");
 const {polygonKey} = require("./credentials");
 const fs = require('fs').promises;
+const  {mkdir} = require( "fs" );
+mkdir(".cache",e=>console.log(e));
+
 
 sub = function (a,b){
     return a.map((e,i) => e - b[i]);
