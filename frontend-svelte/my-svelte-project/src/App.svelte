@@ -16,6 +16,6 @@
 	<AssetCard ticker="BNO" name="Brent Oil Fund"></AssetCard>
 	<AssetCard ticker="IAU" name="iShares Gold Fund"></AssetCard>
 	<AssetCard ticker="X:BTCUSD" name="Bitcoin"></AssetCard>
-	<PortfolioCard tickers="BNO,IAU,X:BTCUSD" weights="0.4,0.4,0.2"></PortfolioCard>
+	<PortfolioCard tickers="BNO,IAU" weights="0.4,0.6"></PortfolioCard>
 	<br>
 </main>
