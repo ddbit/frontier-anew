@@ -1,40 +1,28 @@
 <script>
 	import { onMount, tick } from "svelte";
-    import Chart from "./Chart.svelte";
-    import {baseurl} from "./config.js";
+    import {Portfolio} from "./portfolio";
 
-	var response={};
+	var portfolio={};
 
 	export let tickers, weights;
 	
 	onMount(async () => {
-	  response = await fetch(
-          baseurl+
-          "/portfolio?tickers="+
-          tickers+
-          "&weights="+
-          weights
-        );
-	  response = response.json();
-      console.log("***");
-      console.log(response);
-      
-
+	  portfolio = new Portfolio(tickers,weights);
+      await portfolio.fetchHistory();
 	});
 
 
 </script>
 
 <div class="card">
-	{#await response then data}
-		<h1>{tickers}</h1>
-        <h3>{weights}</h3>
+	{#await portfolio then p}
+		<h1>{p.tickers}</h1>
+        <h3>{p.weights}</h3>
 		<h4>Last 30 days analysis</h4>
 		<div>
-			<p>Volatility :{data.stdev}</p>
+			<p>Volatility :{p.stdev}</p>
 		</div>
 		
-		<Chart y={data.aum} x={(data.aum===undefined)?undefined:data.aum.map((v,j)=>j - data.aum.length + 1)}></Chart>
 	  	
 			
 	{/await}
@@ -45,7 +33,7 @@
         .card {
             width: 25%;
 			float: left;
-            border: 1px solid #aaa;
+            border: 1px solid rgb(55, 23, 142);
             background-color: rgb(224, 249, 244);
             border-radius: 2px;
             box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
