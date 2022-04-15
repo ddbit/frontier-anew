@@ -1,14 +1,14 @@
 <script>
 	import { onMount, tick } from "svelte";
     import Chart from "./Chart.svelte";
-	import {baseurl} from "./config.js"
+	import {baseurl, postfix} from "./config.js"
 	var response={};
 	var x=[];
 	export let ticker, name;
 	
 	onMount(async () => {
 	  //response = await fetch("https://us-central1-frontier-eb43f.cloudfunctions.net/stats?ticker="+ticker);
-	  response = await fetch(baseurl + "/prices?ticker="+ticker); 
+	  response = await fetch(baseurl + ticker + postfix); 
 	  response = response.json(); 
 
 	});
