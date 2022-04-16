@@ -37,11 +37,44 @@ let column = function(df, colName){
     a.forEach(x=>b.push(x[0]));
     return b;
 }
+exports.column = column;
 
 let getReturns = function (prices){
     return div(sub(shift(prices),prices),prices);
 }
-exports.getReturns=getReturns;
+
+let fetchHistory = function (tickers, days) {
+    let t = [];
+        
+    for(let i=0;i<days;i++){
+        let d=new Date(); 
+        d.setDate(d.getDate() - days + i);
+        t.push(d.toISOString().substring(0,10));
+    }
+    let data = new DataFrame({
+        time: t // <------ Time column
+    }, ['time']);
+
+    for(let k=0;k<tickers.length;k++){
+        let ticker = tickers[k];
+        console.log("fetching ..."+ticker);
+        (async ()=>{
+            let h = await fetch(baseurl + ticker + postfix);
+            h = h.json();
+            console.log("h");
+            console.log(h);
+            let df = new DataFrame({
+                time: h.times, // <------ Time column
+                ticker: getReturns(h.prices)
+            }, ['time',ticker]);
+            data = data.join(df,"time");
+        })();
+    }
+    //df4=df3.map(row => row.set('out', dot(row.toArray().slice(1),weights)));
+    return data;
+}
+exports.fetchHistory = fetchHistory;
+
 
 class Portfolio{
     constructor (tickers,weights,days){
@@ -68,31 +101,51 @@ class Portfolio{
 
     }
 
-    fetchHistory = async function () {
-        for(let k=0;k<this.tickers.length;k++){
-            let ticker = this.tickers[k];
-            console.log("fetching ...");
-            console.log(ticker);
-            fetch(baseurl + ticker + postfix).then(
-                (h)=>{console.log(h);
-                    let df = new DataFrame({
-                        time: h.times, // <------ Time column
-                        ticker: getReturns(h.prices)
-                    }, ['time',ticker]);
-                    this.data = this.data.join(df,"time");}
-            );
-        }
-        //df4=df3.map(row => row.set('out', dot(row.toArray().slice(1),weights)));
+    getData = async function () {
+        return await this.data;
+    }
+
+
+
+    calculateReturns = function(){
         this.data=
         this.data.map(row => row.set('return', dot(row.toArray().slice(1),this.weights)));
         this.stdev = this.data.stat.sd("return");
-        this.aum=calculateAUM(column(this.data, "return"),this.initialBalance);
+        return this;
+    }
+
+    calculateAUM = function(){
+
+        var _calculateAUM = function(returns, initialBalance){
+            let aum = Array();
+        
+            aum.push((1 + returns[0]) * initialBalance);
+            for(var i=1;i<returns.length;i++){
+                aum.push((1 + returns[i]) * aum[i-1]);
+            }
+            return aum;
+        }
+
+        this.aum=_calculateAUM(column(this.data, "return"),this.initialBalance);
+        return this;
     }
 }
-exports.Portfolio = Portfolio;
 
 
 
+
+
+
+let init = function(x){
+    return new Promise(resolve => {
+        setTimeout(() => {
+          resolve('resolved');
+        }, 2000);
+      });
+}
+exports.init = init;
+
+exports.PORTFOLIO_CONST="PORTFOLIO_CONST";
 
 //testPortfolio();
 //testDF();

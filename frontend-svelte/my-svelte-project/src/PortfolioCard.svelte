@@ -1,30 +1,27 @@
 <script>
-	import { onMount, tick } from "svelte";
-    import {Portfolio} from "./portfolio";
 
-	var portfolio={};
-
+    import { DataFrame } from "dataframe-js";
+    import {column, fetchHistory, init} from "./portfolio";
 	export let tickers, weights;
-	
-	onMount(async () => {
-	  portfolio = new Portfolio(tickers,weights);
-      await portfolio.fetchHistory();
-	});
-
+    var promise=fetchHistory(tickers,30);
 
 </script>
 
 <div class="card">
-	{#await portfolio then p}
-		<h1>{p.tickers}</h1>
-        <h3>{p.weights}</h3>
+
+
+	
+		<h1>{tickers}</h1>
+        <h3>{weights}</h3>
 		<h4>Last 30 days analysis</h4>
-		<div>
-			<p>Volatility :{p.stdev}</p>
-		</div>
-		
-	  	
-			
+    {#await promise}
+        <p>Data : ...loading</p>
+    {:then df}
+        <p>Data :{df===undefined?df:df.show()}</p>
+ 
+
+    {:catch err}
+     <p>Promise failed! {err}</p>
 	{/await}
     </div>
 
