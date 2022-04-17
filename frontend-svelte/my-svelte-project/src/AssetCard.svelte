@@ -14,7 +14,7 @@ import { onMount, tick } from "svelte";
 
 
 	let fmt=function(val){
-		return String(val*100).substring(0,4);
+		return String(val*100).substring(0,4)+"%";
 	}
 
 
