@@ -4,7 +4,7 @@
 	import {baseurl, postfix} from "./config.js"
 	var response={};
 	var x=[];
-	export let ticker, name;
+	export let ticker, name, chart=false;
 	
 	onMount(async () => {
 	  response = await fetch(baseurl + ticker + postfix); 
@@ -21,10 +21,11 @@
 	{#await response then data}
 		<h1>{ticker}</h1>
         <h3>{name}</h3>
-		<h4>Last 30 days analysis</h4>
-		
-		<Chart y={data.prices} x={(data.prices===undefined)?undefined:data.prices.map((v,j)=>j - data.prices.length + 1)}></Chart>
-	  	
+		<h3>+0.12%</h3>
+		<h5>last 30 days</h5>
+		{#if chart}
+			<Chart y={data.prices} x={(data.prices===undefined)?undefined:data.prices.map((v,j)=>j - data.prices.length + 1)}></Chart>
+	  	{/if}
 			
 	{/await}
     </div>
