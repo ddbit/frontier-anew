@@ -2,6 +2,8 @@
 	
 import Hello from "./Hello.svelte";
 import PortfolioCard from "./PortfolioCard.svelte";
+let tickers=["BNO","IAU","X:BTCUSD"];
+let weights=[1/3,1/3,1/3];
 </script>
 
 <main>
@@ -12,10 +14,14 @@ import PortfolioCard from "./PortfolioCard.svelte";
 		</h1>
 
 	</div>
-	<PortfolioCard tickers={["BNO","IAU"]} weights={[0.3,0.7]}}></PortfolioCard>
+	<PortfolioCard 
+		tickers={tickers} 
+		bind:weights={weights}>
+	</PortfolioCard>
 
 	<Hello name="davide" 
-			tickers={["BNO","IAU"]}
-			weights={[0.3,0.7]}></Hello>
+			tickers={tickers}
+			weights={weights}>
+	</Hello>
 	<br>
 </main>

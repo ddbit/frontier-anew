@@ -2,8 +2,21 @@
     import { onMount, afterUpdate } from "svelte";
     import {hello, calculateReturns, createDataframe, calculateAUM} from "./hello.js";
     export let name, tickers, weights;
-    var data, table=[];
-    onMount (async ()=>{
+    var data, withReturns, withAum, table=[];
+
+    let recalculate= function(){
+        if(data) {
+            withReturns = calculateReturns(data,weights);
+            withAum = calculateAUM(withReturns,1000);
+            table = withAum.toCollection();
+        }
+    }
+
+	let fmt=function(val){
+		return String(val*100).substring(0,4);
+	}
+
+    onMount (async () => {
         console.log("before");
         data = await createDataframe(tickers,weights);
         console.log("after");
@@ -11,20 +24,14 @@
     
     afterUpdate(async () => {
 		console.log('the component just updated');
-        if(data) {
-            data = calculateReturns(data,weights);
-            data = calculateAUM(data,1000);
-            data.show();
-            table = data.toCollection();
-        }
-            
+        recalculate();
 	});
     
 
 </script>
 
 <p>{JSON.stringify(hello(name))}</p>
-<p>{tickers}</p>
+<p>{weights.map(fmt)}</p>
 {#await  data }
     <p>loading ....</p>
 {:then data}
