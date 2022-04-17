@@ -28,20 +28,12 @@ let shift = function (a){
     return r;
 }
 
-exports.sub=sub;
-exports.div=div;
-exports.shift=shift;
-let column = function(df, colName){
-    let a = df.select(colName).toArray();
-    let b = [];
-    a.forEach(x=>b.push(x[0]));
-    return b;
-}
-exports.column = column;
+
 
 let getReturns = function (prices){
     return div(sub(shift(prices),prices),prices);
 }
+exports.getReturns = getReturns;
 
 let fetchHistory = function (tickers, days) {
     let t = [];

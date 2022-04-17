@@ -1,7 +1,5 @@
 <script>
-	import AssetCard from "./AssetCard.svelte";
-import Hello from "./Hello.svelte";
-	import PortfolioCard from "./PortfolioCard.svelte";
+	import Hello from "./Hello.svelte";
 </script>
 
 <main>
@@ -14,7 +12,6 @@ import Hello from "./Hello.svelte";
 			this box is empty for now...
 		</center>
 	</div>
-	<AssetCard ticker="BNO" name="Brent Oil Fund"></AssetCard>
-	<Hello name="davide" ticker="BNO"></Hello>
+	<Hello name="davide" tickers={["BNO","IAU"]}></Hello>
 	<br>
 </main>
