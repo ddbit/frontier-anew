@@ -45,7 +45,7 @@ exports.hello = hello;
 
 let load = async function(ticker){
    let r = await fetch(baseurl+ticker+postfix);
-   console.log(r);
+   //console.log(r);
    r = r.json();
    return r;
 }
@@ -76,11 +76,40 @@ let createDataframe = async function(tickers){
 }
 exports.createDataframe = createDataframe;
 
-let calculateReturns = async function(tickers, weights){
-    let data = await createDataframe(tickers,weights);
+let calculateReturns = function(dataframe,weights){
+    let data = dataframe;
     data=
     data.map(row => row.set('return', dot(row.toArray().slice(1),weights)));
     return data;
 }
 
 exports.calculateReturns = calculateReturns;
+
+
+let calculateAUM = function(dataframe, initialBalance){
+    
+    var column = function(df, colName){
+        let a = df.select(colName).toArray();
+        let b = [];
+        a.forEach(x=>b.push(x[0]));
+        return b;
+    }
+    var _calculateAUM = function(returns, initialBalance){
+        let aum = Array();
+    
+        aum.push((1 + returns[0]) * initialBalance);
+        for(var i=1;i<returns.length;i++){
+            aum.push((1 + returns[i]) * aum[i-1]);
+        }
+        return aum;
+    }
+
+    let aum=_calculateAUM(column(dataframe, "return"),initialBalance);
+
+    let k=0;
+    dataframe=dataframe.withColumn('aum',()=>aum[k++]);
+    dataframe.show();
+    return dataframe;
+}
+
+exports.calculateAUM=calculateAUM;

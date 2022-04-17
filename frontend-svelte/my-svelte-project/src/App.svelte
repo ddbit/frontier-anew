@@ -12,6 +12,8 @@
 			this box is empty for now...
 		</center>
 	</div>
-	<Hello name="davide" tickers={["BNO","IAU"]}></Hello>
+	<Hello name="davide" 
+			tickers={["BNO","IAU"]}
+			weights={[0.3,0.7]}></Hello>
 	<br>
 </main>
