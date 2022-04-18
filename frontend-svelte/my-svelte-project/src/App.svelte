@@ -1,6 +1,7 @@
 <script>
 	
-import Hello from "./Hello.svelte";
+import Aum from "./Aum.svelte";
+import Hello from "./Aum.svelte";
 import PortfolioCard from "./PortfolioCard.svelte";
 let tickers=["BNO","IAU","X:BTCUSD"];
 let weights=[1/3,1/3,1/3];
@@ -19,9 +20,9 @@ let weights=[1/3,1/3,1/3];
 		bind:weights={weights}>
 	</PortfolioCard>
 
-	<Hello name="davide" 
+	<Aum name="davide" 
 			tickers={tickers}
 			weights={weights}>
-	</Hello>
+	</Aum>
 	<br>
 </main>

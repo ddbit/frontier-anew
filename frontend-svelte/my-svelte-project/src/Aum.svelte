@@ -1,6 +1,6 @@
 <script>
     import { onMount, afterUpdate } from "svelte";
-    import {hello, calculateReturns, createDataframe, calculateAUM} from "./hello.js";
+    import {hello, calculateReturns, createDataframe, calculateAUM} from "./portfolio.js";
     export let name, tickers, weights;
     var data, withReturns, withAum, table=[];
 

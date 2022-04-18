@@ -27,9 +27,13 @@ let shift = function (a){
     //console.log(r);
     r.push(a[a.length - 1]);
     return r;
-}
+};
 
-
+exports.shift = shift;
+exports.dot = dot;
+exports.mul = mul;
+exports.sub = sub;
+exports.div = div;
 
 let getReturns = function (prices){
     return div(sub(shift(prices),prices),prices);
@@ -53,7 +57,7 @@ exports.load = load;
 
 let createDataframe = async function(tickers){
     let t = [];
-    let days=30;
+    let days=60;
         
     for(let i=0;i<days;i++){
         let d=new Date(); 
