@@ -2,7 +2,7 @@
 
 var {expect}    = require("chai");
 const { default: DataFrame } = require("dataframe-js");
-var {sub,div,shift,mul,dot, load, getReturns, calculateAUM, createDataframe} = require("../src/portfolio");
+var {sub,div,shift,mul,dot, load, getReturns, calculateAUM, createDataframe, calculateReturns} = require("../src/portfolio");
 
 describe("portfolio functions", function() {
     it("element wise subtract of arrays", function() {
@@ -60,6 +60,13 @@ describe("portfolio functions", function() {
         expect(aum).to.deep.equal([105,126,151.2]);
     });
 
+    it("create dataframe", async function() {
+        let tickers = ["X:BTCUSD","X:BTCUSD"];
+        let df=await createDataframe(tickers);
+        df.show();
+        df = calculateReturns(df,[0.5,0.5]);
+        df.show();
+    });
 
 
 

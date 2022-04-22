@@ -1,5 +1,6 @@
 const {baseurl, postfix} = require("./config"); 
 var DataFrame = require('dataframe-js').DataFrame
+const axios = require('axios');
 
 
 let sub = function (a,b){
@@ -48,10 +49,12 @@ let hello = function(name){
 exports.hello = hello;
 
 let load = async function(ticker){
-   let r = await fetch(baseurl+ticker+postfix);
+   let url = baseurl+ticker+postfix;
+   //let r = await fetch(url);
+   let r = await axios.get(url);
    //console.log(r);
-   r = r.json();
-   return r;
+   //r = r.json();
+   return r.data;
 }
 exports.load = load;
 
@@ -73,7 +76,7 @@ let createDataframe = async function(tickers){
         let df = new DataFrame({
         time: data.times, // <------ Time column
         ticker:getReturns(data.prices)
-        }, ['time',t]);
+        }, ['time',t+'_'+k]);
         dataframe = dataframe.join(df,"time");
     }
     return dataframe;
@@ -81,13 +84,14 @@ let createDataframe = async function(tickers){
 exports.createDataframe = createDataframe;
 
 let calculateReturns = function(dataframe,weights){
-    let data = dataframe;
-    data=
-    data.map(row => row.set('return', dot(row.toArray().slice(1),weights)));
+    
+    let data=
+    dataframe.map(row => row.set('return', dot(row.toArray().slice(1),weights)));
     return data;
 }
 
 exports.calculateReturns = calculateReturns;
+
 
 
 let calculateAUM = function(dataframe, initialBalance){
