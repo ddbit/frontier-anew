@@ -3,7 +3,6 @@
 	//import points from './data.js';
     export let x,y;
 	let points=[{x:0,y:0}];
-    console.log("pippo");
 	var len;
 
     if (y !== undefined) {

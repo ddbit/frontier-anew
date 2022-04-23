@@ -1,52 +1,58 @@
 <script>
-	import { onMount, tick } from "svelte";
-    import Chart from "./Chart.svelte";
-    import {baseurl} from "./config.js";
-
-	var response={};
-
+    import AssetCard from "./AssetCard.svelte";
 	export let tickers, weights;
-	
-	onMount(async () => {
-	  response = await fetch(
-          baseurl+
-          "/portfolio?tickers="+
-          tickers+
-          "&weights="+
-          weights
-        );
-	  response = response.json();
-      console.log("***");
-      console.log(response);
-      
+    let incr=function(index, delta){
+        weights[index]=weights[index]+delta;
+        if(weights[index]>1) weights[index]=1;
+        if(weights[index]<0) weights[index]=0;
+        let sum = weights.reduce((s,k)=>s+k);
+        weights = weights.map(x=>x/sum);
+    }
 
-	});
-
-
+    let rebalance=function(){
+        weights=weights.map(_=>1/weights.length);
+    }
+    let fmt=function(val){
+		return String(val*100).substring(0,4)+"%";
+	}
 </script>
 
-<div class="card">
-	{#await response then data}
-		<h1>{tickers}</h1>
-        <h3>{weights}</h3>
-		<h4>Last 30 days analysis</h4>
-		<div>
-			<p>Volatility :{data.stdev}</p>
-		</div>
-		
-		<Chart y={data.aum} x={(data.aum===undefined)?undefined:data.aum.map((v,j)=>j - data.aum.length + 1)}></Chart>
-	  	
-			
-	{/await}
-    </div>
+<div class="portfolio">
+    
+    <tr>
+        {#each tickers as t}
+        <td>
+            <AssetCard ticker={t}></AssetCard>
+        </td>
+        {/each}
+    </tr>
+    <tr>
+        {#each weights as w, k}
+            <td>
+                <center>
+                    <button on:click={()=>{incr(k,0.25)}}>+</button>
+                    <button on:click={()=>{incr(k,-0.25)}}>-</button>
+                    {fmt(w)}
+                </center>
+            </td>
+        {/each}
+        
+    </tr>
+    <tr>
+        <td>
+            <button on:click={rebalance}>rebalance naive</button>
+        </td>
+    </tr>
+    
+</div>
 
 
     <style>
-        .card {
-            width: 25%;
+        .portfolio {
+            width: 100%;
 			float: left;
-            border: 1px solid #aaa;
-            background-color: rgb(224, 249, 244);
+            border: 1px solid rgb(0, 0, 0);
+            background-color: rgb(250, 252, 252);
             border-radius: 2px;
             box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
             padding: 30px;

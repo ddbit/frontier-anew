@@ -97,7 +97,11 @@ const testPortfolio=async function(){
     p = new Portfolio(["X:BTCUSD","IAU","BNO"],[1,0,0]);
     console.log(p.weights);
     console.log(p.days);
+    console.log("AAAA");
+    p.data.show();
+    console.log("BBBB");
     await p.fetchHistory();
+    console.log("CCCC");
     p.data.show();
     console.log(p.stdev);
     console.log(p.aum);

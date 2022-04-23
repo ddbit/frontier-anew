@@ -1,21 +1,28 @@
 <script>
-	import AssetCard from "./AssetCard.svelte";
-	import PortfolioCard from "./PortfolioCard.svelte";
+	
+import Aum from "./Aum.svelte";
+import Hello from "./Aum.svelte";
+import PortfolioCard from "./PortfolioCard.svelte";
+let tickers=["X:BTCUSD","X:BTCUSD"];//["BNO","IAU","X:BTCUSD"];
+let weights=[0.5,0.5];//[1/3,1/3,1/3];
 </script>
 
 <main>
 	<div style=
-		"background-color: lightgrey; border-style:dotted; height:250px; width:100%">
+		"background-color: lightgrey; border-style:dotted; height:100px; width:100%">
 		<h1 style="text-align: center;">
 			Efficient Frontier
 		</h1>
-		<center>
-			this box is empty for now...
-		</center>
+
 	</div>
-	<AssetCard ticker="BNO" name="Brent Oil Fund"></AssetCard>
-	<AssetCard ticker="IAU" name="iShares Gold Fund"></AssetCard>
-	<AssetCard ticker="X:BTCUSD" name="Bitcoin"></AssetCard>
-	<PortfolioCard tickers="BNO,IAU" weights="0.4,0.6"></PortfolioCard>
+	<PortfolioCard 
+		tickers={tickers} 
+		bind:weights={weights}>
+	</PortfolioCard>
+
+	<Aum name="davide" 
+			tickers={tickers}
+			weights={weights}>
+	</Aum>
 	<br>
 </main>
