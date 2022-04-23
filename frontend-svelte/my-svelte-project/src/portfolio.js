@@ -58,7 +58,7 @@ let load = async function(ticker){
 }
 exports.load = load;
 
-let createDataframe = async function(tickers){
+let createPriceDataframe = async function(tickers){
     let t = [];
     let days=60;
         
@@ -75,22 +75,41 @@ let createDataframe = async function(tickers){
         let data = await load(t);
         let df = new DataFrame({
         time: data.times, // <------ Time column
-        ticker:getReturns(data.prices)
+        ticker:(data.prices)
         }, ['time',t+'_'+k]);
         dataframe = dataframe.join(df,"time");
     }
     return dataframe;
 }
-exports.createDataframe = createDataframe;
+exports.createPriceDataframe = createPriceDataframe;
 
-let calculateReturns = function(dataframe,weights){
-    
+let createReturnsDataframe = function(priceDataframe){
+    let colNames = priceDataframe.listColumns();
+    let returnsDataframe=new DataFrame(priceDataframe);
+    returnsDataframe.show();
+    colNames.forEach(
+        colName=>{
+            let col = priceDataframe.toDict()[colName];
+            if(colName!=="time"){
+                var newCol = getReturns(col);
+                returnsDataframe = returnsDataframe.withColumn(colName, (row,index)=>newCol[index]);
+            }
+        }
+    );
+
+    return returnsDataframe;
+
+}
+exports.createReturnsDataframe = createReturnsDataframe;
+
+
+let calculateGlobalReturns = function(dataframe,weights){
     let data=
     dataframe.map(row => row.set('return', dot(row.toArray().slice(1),weights)));
     return data;
 }
 
-exports.calculateReturns = calculateReturns;
+exports.calculateGlobalReturns = calculateGlobalReturns;
 
 
 
