@@ -76,7 +76,7 @@ let createPriceDataframe = async function(tickers){
         let df = new DataFrame({
         time: data.times, // <------ Time column
         ticker:(data.prices)
-        }, ['time',t+'_'+k]);
+        }, ['time',t]);
         dataframe = dataframe.join(df,"time");
     }
     return dataframe;

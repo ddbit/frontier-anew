@@ -11,9 +11,10 @@
             withWeightedReturns = calculateGlobalReturns(withReturns,weights);
             withAum = calculateAUM(withWeightedReturns,1000);
             table = withAum.toCollection();
+            console.log("table");
+            console.log(table);
             aum = withAum.toDict().aum;
-            console.log("aum");
-            console.log(aum);
+
         }
     }
 
@@ -35,23 +36,29 @@
 
 </script>
 
-<p>{JSON.stringify(hello(name))}</p>
-<p>{weights.map(fmt)}</p>
+
 {#await  data }
     <p>loading ....</p>
 {:then data}
-    <p>data: {data}</p>
     {#if data}
-        <p>data is ready</p>
+
         {#key aum}
             <Chart y={aum} x={aum.map((v,j)=>j - aum.length + 1)}></Chart>
         {/key}
         <table>
-            <tr><td>time</td><td>return</td><td>aum</td></tr>
+            <tr><td>time</td>
+            {#each tickers as t}
+                <td>{t}</td>
+            {/each}
+            <td>return</td><td>aum</td></tr>
             {#each table as row}
             <tr>
                 <td>{row.time}</td> 
-                <td>{String(row.return).substring(0,6)}</td>
+                {#each tickers as t}
+                    <td>{fmt(row[t])}</td>
+                {/each}
+               
+                <td>{fmt(row.return)}</td>
                 <td>{String(row.aum).substring(0,6)}</td>
             </tr>
             <p>
@@ -62,3 +69,11 @@
 
     {/if}
 {/await}
+
+
+<style>
+	.center {
+		margin-left: auto;
+		margin-right: auto;
+	}
+</style>
