@@ -2,22 +2,37 @@
 	import { scaleLinear } from 'd3-scale';
 	//import points from './data.js';
     export let x,y;
-	let points=[{x:0,y:0}];
+	var points;
 	var len;
 
     if (y !== undefined) {
 		points=[];
 		if(x===undefined) x=y.map((v,j)=>j);
-		//console.log(x);
+		
 		len = y.length;
 		for(let i=0;i<len;i++){
 			points.push({"x":x[i], "y":y[i]});
 		}
+		
 	}
-	const yTicks = [0,Math.min.apply(null,y),Math.max.apply(null,y)];
+	console.log("points");
+	console.log(points);
+	console.log(x);
+	console.log(y);
+	if(points.length==0)points=[{x:0,y:0}];
+	var len = y?y.length:0;
+	var lastY = len>0?y[len-1]:undefined;
+	var lastX = len>0?x[len-1]:undefined;
+	var minY = Math.min.apply(null,y);
+	var maxY = Math.max.apply(null,y);
+	const yTicks = [minY, maxY, lastY];
+	
     //const yTicks = [30000,50000];
  
 	const xTicks = [Math.min.apply(null,x),Math.round(len/2) - len, Math.max.apply(null,x)];
+	
+	if(lastY) yTicks.push(lastY);
+
 	const padding = { top: 20, right: 15, bottom: 20, left: 25 };
 
 	let width = 500;
@@ -34,7 +49,7 @@
 	$: minX = points[0].x;
 	$: maxX = points[points.length - 1].x;
 	$: path = `M${points.map(p => `${xScale(p.x)},${yScale(p.y)}`).join('L')}`;
-	$: area = `${path}L${xScale(maxX)},${yScale(0)}L${xScale(minX)},${yScale(0)}Z`;
+	$: area = `${path}L${xScale(maxX)},${yScale(minY)}L${xScale(minX)},${yScale(minY)}Z`;
 
 	function formatMobile (tick) {
 		return "'" + tick.toString().slice(-2);

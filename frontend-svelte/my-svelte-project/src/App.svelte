@@ -3,8 +3,8 @@
 import Aum from "./Aum.svelte";
 import Hello from "./Aum.svelte";
 import PortfolioCard from "./PortfolioCard.svelte";
-let tickers=["X:BTCUSD","X:BTCUSD"];//["BNO","IAU","X:BTCUSD"];
-let weights=[0.5,0.5];//[1/3,1/3,1/3];
+let tickers=["BNO","IAU","X:BTCUSD"];
+let weights=[1/3,1/3,1/3];
 </script>
 
 <main>
