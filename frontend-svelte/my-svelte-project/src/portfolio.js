@@ -49,7 +49,7 @@ let hello = function(name){
 exports.hello = hello;
 
 let load = async function(ticker){
-   let url = baseurl+ticker+postfix;
+   let url = baseurl+ticker;
    //let r = await fetch(url);
    let r = await axios.get(url);
    //console.log(r);

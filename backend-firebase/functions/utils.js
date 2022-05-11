@@ -55,7 +55,7 @@ exports.writePrices = writePrices;
 readPrices=async function(ticker){
     let data =  fs.readFileSync('./bucket/'+ticker+'.json','utf-8');
     console.log(data);
-    return data;
+    return JSON.parse(data);
 }
 exports.readPrices=readPrices;
 

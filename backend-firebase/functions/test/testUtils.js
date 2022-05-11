@@ -12,10 +12,11 @@ describe("Utils", function() {
     });
 
     it("write/read price history to storage", async function() {
-        writePrices("IAU",{"x":123});
+        let obj = {"x":123};
+        writePrices("IAU",obj);
         let data =  await readPrices("IAU");
-        console.log("***");
         console.log(data);  
+        expect(data).to.be.deep.equal(obj);
     });
 
     it("writeAll in storage", async function() {
