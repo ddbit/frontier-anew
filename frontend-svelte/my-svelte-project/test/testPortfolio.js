@@ -5,19 +5,25 @@ const { default: DataFrame } = require("dataframe-js");
 var {sub,div,shift,mul,dot, load, getReturns, calculateAUM, createPriceDataframe, createReturnsDataframe, calculateGlobalReturns} = require("../src/portfolio");
 
 describe("portfolio functions", function() {
+
+    it("load asset prices", async function() {
+        let data = await load("IAU");
+        console.log("**** **** **** ****");
+        console.log(data);
+    });
+
     it("element wise subtract of arrays", function() {
         let a = [1,2,3,4];
         let b = [1,1,1,2];
         let c = [0,1,2,2];
         expect(sub(a,b)).to.deep.equal(c);
-    
     });
+
     it("element wise divide of arrays", function() {
         let a = [1,2,3,4,3];
         let b = [1,1,1,2,5];
         let c = [1,2,3,2,0.6];
         expect(div(a,b)).to.deep.equal(c);
-    
     });
 
     it("element wise mul of arrays", function() {
@@ -25,7 +31,6 @@ describe("portfolio functions", function() {
         let b = [1,1,1,2,5];
         let c = [1,2,3,8,15];
         expect(mul(a,b)).to.deep.equal(c);
-    
     });
 
     it("dot product between 2 arrays", function() {
@@ -33,7 +38,6 @@ describe("portfolio functions", function() {
         let b = [1,1,1,2,5];
         let c = 29;
         expect(dot(a,b)).to.deep.equal(c);
-    
     });
 
     it("shift of arrays by one", function() {
