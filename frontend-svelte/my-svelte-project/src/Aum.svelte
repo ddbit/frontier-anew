@@ -31,21 +31,21 @@
 		console.log('the component just updated');
         recalculate();
 	});
-    
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const isDebug = urlParams.has('debug');
 
 </script>
 
-<p>{JSON.stringify(hello(name))}</p>
-<p>{weights.map(fmt)}</p>
 {#await  data }
     <p>loading ....</p>
 {:then data}
-    <p>data: {data}</p>
     {#if data}
         <p>data is ready</p>
         {#key aum}
             <Chart y={aum} x={aum.map((v,j)=>j - aum.length + 1)}></Chart>
         {/key}
+        {#if isDebug}
         <table>
             <tr><td>time</td><td>return</td><td>aum</td></tr>
             {#each table as row}
@@ -59,6 +59,7 @@
             </p>
             {/each}
         </table>
+        {/if}
 
     {/if}
 {/await}
