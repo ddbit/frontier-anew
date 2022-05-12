@@ -9,7 +9,7 @@
         if(data) {
             withReturns = createReturnsDataframe(data);
             withWeightedReturns = calculateGlobalReturns(withReturns,weights);
-            withAum = calculateAUM(withWeightedReturns,1000);
+            withAum = calculateAUM(withWeightedReturns,100);
             table = withAum.toCollection();
             aum = withAum.toDict().aum;
             console.log("aum");

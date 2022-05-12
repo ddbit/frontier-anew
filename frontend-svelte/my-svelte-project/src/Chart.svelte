@@ -25,7 +25,7 @@
 	var lastX = len>0?x[len-1]:undefined;
 	var minY = Math.min.apply(null,y);
 	var maxY = Math.max.apply(null,y);
-	const yTicks = [minY, maxY, lastY];
+	const yTicks = [y[0],minY, maxY, lastY];
 	
     //const yTicks = [30000,50000];
  
