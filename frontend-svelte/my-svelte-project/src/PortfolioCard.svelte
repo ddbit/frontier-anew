@@ -1,6 +1,12 @@
 <script>
     import AssetCard from "./AssetCard.svelte";
-	export let tickers, weights;
+	export let tickers, names, weights;
+    let assets={};
+
+    for(let i=0;i<tickers.length;i++){
+        assets[tickers[i]] = names[i]; 
+    }
+
     let incr=function(index, delta){
         weights[index]=weights[index]+delta;
         if(weights[index]>1) weights[index]=1;
@@ -22,7 +28,7 @@
     <tr>
         {#each tickers as t}
         <td>
-            <AssetCard ticker={t}></AssetCard>
+            <AssetCard ticker={t} name={assets[t]}></AssetCard>
         </td>
         {/each}
     </tr>

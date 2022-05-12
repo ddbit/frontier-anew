@@ -1,9 +1,9 @@
 <script>
 	
 import Aum from "./Aum.svelte";
-import Hello from "./Aum.svelte";
 import PortfolioCard from "./PortfolioCard.svelte";
 let tickers=["BNO","IAU","X:BTCUSD"];
+let names = ["Brent Oil Fund","iShares Gold", "Bitcoin"];
 let weights=[1/3,1/3,1/3];
 </script>
 
@@ -16,6 +16,7 @@ let weights=[1/3,1/3,1/3];
 
 	</div>
 	<PortfolioCard 
+		names={names}
 		tickers={tickers} 
 		bind:weights={weights}>
 	</PortfolioCard>
