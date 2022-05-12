@@ -3,15 +3,13 @@ const {polygonKey} = require("./credentials");
 const fs = require('fs');
 
 
-
-
-priceHistory = async function (ticker){
-
-
+priceHistory = async function (ticker, days){
+    let period = days;
+    console.log(period);
     const api = restClient(polygonKey);
     let to = new Date();
     let from = ((date) => {
-        date.setDate(to.getDate() - 30);
+        date.setDate(to.getDate() - (period===undefined?30:period));
         return date;
        }
      )(new Date());
@@ -59,9 +57,9 @@ readPrices=async function(ticker){
 }
 exports.readPrices=readPrices;
 
-writeAll = async function(tickers){
+writeAll = async function(tickers, days){
     tickers.forEach(async t=>{
-        let prices = await priceHistory(t);
+        let prices = await priceHistory(t,days);
         writePrices(t,prices);
     });
 }

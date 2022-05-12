@@ -1,8 +1,8 @@
 <script>
     import { onMount, afterUpdate } from "svelte";
     import Chart from "./Chart.svelte";
-    import {hello, calculateGlobalReturns, createPriceDataframe, calculateAUM, createReturnsDataframe} from "./portfolio.js";
-    export let name, tickers, weights;
+    import {calculateGlobalReturns, createPriceDataframe, calculateAUM, createReturnsDataframe} from "./portfolio.js";
+    export let  tickers, weights;
     var data, withReturns, withWeightedReturns, withAum, table=[], aum=[];
 
     let recalculate= function(){

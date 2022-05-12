@@ -1,14 +1,14 @@
 <script>
 	import dataframe from "dataframe-js/lib/dataframe";
-import { onMount, tick } from "svelte";
+	import { onMount, tick } from "svelte";
     import Chart from "./Chart.svelte";
-	import {baseurl, postfix} from "./config.js"
+	import {baseurl} from "./config.js"
 	var response={};
 	var x=[];
 	export let ticker, name, chart=false;
 	
 	onMount(async () => {
-	  response = await fetch(baseurl + ticker + postfix); 
+	  response = await fetch(baseurl + ticker); 
 	  response = response.json(); 
 	});
 
@@ -16,8 +16,6 @@ import { onMount, tick } from "svelte";
 	let fmt=function(val){
 		return String(val*100).substring(0,4)+"%";
 	}
-
-
 </script>
 
 	<div class="card">
@@ -27,7 +25,6 @@ import { onMount, tick } from "svelte";
 			{#if data.prices}
 				<h3>{fmt((data.prices[data.prices.length-1] - data.prices[0])/data.prices[0])}</h3>
 			{/if}
-			<h5>last 30 days</h5>
 			{#if chart}
 				<Chart y={data.prices} x={(data.prices===undefined)?undefined:data.prices.map((v,j)=>j - data.prices.length + 1)}></Chart>
 			{/if}

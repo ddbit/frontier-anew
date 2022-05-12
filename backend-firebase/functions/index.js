@@ -22,7 +22,7 @@ exports.updateLocalStorage = functions.https.onRequest((request, response) => {
    functions.logger.info("Prices 30 days!", {structuredData: true}); 
    response.setHeader("Access-Control-Allow-Origin","*");
    const tickers = ["IAU","BNO","X:BTCUSD"];
-   writeAll(tickers).then(_=>response.send({"update":"ok"}));
+   writeAll(tickers,90).then(_=>response.send({"update":"ok"}));
    //response.send(await stats(ticker));
 });
 
@@ -30,7 +30,7 @@ exports.updateLocalStorageScheduled = functions.pubsub.schedule('every 1 day').o
    console.log('This will be run every day!');
    response.setHeader("Access-Control-Allow-Origin","*");
    const tickers = ["IAU","BNO","X:BTCUSD"];
-   writeAll(tickers).then(_=>console.log("update done!"));
+   writeAll(tickers,90).then(_=>console.log("update done!"));
  });
  
 

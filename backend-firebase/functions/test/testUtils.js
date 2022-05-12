@@ -1,14 +1,12 @@
 // test/converter.js
 
 var {expect}    = require("chai");
-var {priceHistory, writePrices, readPrices} = require("../utils.js");
+var {priceHistory, writePrices, readPrices, dateRange} = require("../utils.js");
 
 describe("Utils", function() {
+
     it("fecth price history", async function() {
-        let h = await priceHistory("IAU");
-        //console.log(h);
-        //expect(sub(a,b)).to.deep.equal(c);
-    
+        let h = await priceHistory("IAU",90);
     });
 
     it("write/read price history to storage", async function() {
@@ -20,7 +18,7 @@ describe("Utils", function() {
     });
 
     it("writeAll in storage", async function() {
-        writeAll(["IAU","X:BTCUSD","BNO"]);
+        writeAll(["IAU","X:BTCUSD","BNO"],90);
     });
 
 
