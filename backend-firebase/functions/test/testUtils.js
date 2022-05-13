@@ -6,7 +6,8 @@ var {priceHistory, writePrices, readPrices, dateRange} = require("../utils.js");
 describe("Utils", function() {
 
     it("fecth price history", async function() {
-        let h = await priceHistory("IAU",90);
+        let h = await priceHistory("NSPI",90);
+        console.log(h);
     });
 
     it("write/read price history to storage", async function() {
