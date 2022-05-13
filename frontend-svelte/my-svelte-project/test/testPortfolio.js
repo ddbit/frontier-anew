@@ -57,11 +57,12 @@ describe("portfolio functions", function() {
 
     it("calculate aum over time from returns", async function() {
         let returns = [0.05,0.2,0.2];
+        let expectedAUM = [100,105,126];
         let df=new DataFrame({'return':returns},['return']);
         df = calculateAUM(df,100);
         df.show();
         let aum = df.toDict().aum;
-        expect(aum).to.deep.equal([105,126,151.2]);
+        expect(aum).to.deep.equal(expectedAUM);
     });
 
     it("create price dataframe and returns dataframe", async function() {

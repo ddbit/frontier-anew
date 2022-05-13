@@ -124,9 +124,9 @@ let calculateAUM = function(dataframe, initialBalance){
     var _calculateAUM = function(returns, initialBalance){
         let aum = Array();
     
-        aum.push((1 + returns[0]) * initialBalance);
+        aum.push(initialBalance);
         for(var i=1;i<returns.length;i++){
-            aum.push((1 + returns[i]) * aum[i-1]);
+            aum.push((1 + returns[i-1]) * aum[i-1]);
         }
         return aum;
     }

@@ -22,8 +22,6 @@ let from = ((date) => {
 		<h1 style="text-align: center;">
 			(not yet) Efficient Frontier
 		</h1>
-		<p>date range observed {[from.toISOString().substring(0,10),
-		 						to.toISOString().substring(0,10)]}</p>
 	</div>
 	<PortfolioCard 
 		names={names}
@@ -31,6 +29,9 @@ let from = ((date) => {
 		bind:weights={weights}>
 	</PortfolioCard>
 
+	<p>date range observed {[from.toISOString().substring(0,10),
+		to.toISOString().substring(0,10)]}
+	</p>
 	<Aum name="davide" 
 			tickers={tickers}
 			weights={weights}>

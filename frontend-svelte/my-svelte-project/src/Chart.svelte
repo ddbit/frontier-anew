@@ -29,7 +29,7 @@
 	
     //const yTicks = [30000,50000];
  
-	const xTicks = [Math.min.apply(null,x),Math.round(len/2) - len, Math.max.apply(null,x)];
+	const xTicks =[];// [Math.min.apply(null,x),Math.round(len/2) - len, Math.max.apply(null,x)];
 	
 	if(lastY) yTicks.push(lastY);
 
