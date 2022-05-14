@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "axios": "^0.26.1",
+    "calculate-correlation": "^1.2.3",
     "chai": "^4.3.6",
     "d3-scale": "^4.0.2",
     "dataframe-js": "^1.4.4",

@@ -2,7 +2,18 @@
 
 var {expect}    = require("chai");
 const { default: DataFrame } = require("dataframe-js");
-var {sub,div,shift,mul,dot, load, getReturns, calculateAUM, createPriceDataframe, createReturnsDataframe, calculateGlobalReturns} = require("../src/portfolio");
+var {sub,
+    div,
+    shift,
+    mul,
+    dot, 
+    corr,
+    load, 
+    getReturns, 
+    calculateAUM, 
+    createPriceDataframe, 
+    createReturnsDataframe, 
+    calculateGlobalReturns} = require("../src/portfolio");
 
 describe("portfolio functions", function() {
 
@@ -46,6 +57,15 @@ describe("portfolio functions", function() {
 
         expect(shift(a)).to.deep.equal(b);
     
+    });
+
+    it("calculate correlations", async function() {
+        a=[0.1,0.3,-0.2,0.05,-0.08];
+        b=[0.0,-0.3,-0.2,0.05,0.08];
+        c=[-0.1,0.03,0.2,0.05,-0.08];
+        d=[0.01,0.1,-0.2,0.05,0.08];
+
+        console.log( corr (a,b) );
     });
 
     it("calculate returns from prices", async function() {

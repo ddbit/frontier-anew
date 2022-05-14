@@ -3,7 +3,7 @@ const {polygonKey} = require("./credentials");
 const fs = require('fs');
 
 
-priceHistory = async function (ticker, days){
+const priceHistory = async function (ticker, days){
     let period = days;
     console.log(period);
     const api = restClient(polygonKey);
@@ -45,22 +45,23 @@ priceHistory = async function (ticker, days){
 exports.priceHistory=priceHistory;
 
 
-writePrices=function(ticker, prices){
+const writePrices=function(ticker, prices){
     fs.writeFileSync('./bucket/'+ticker+'.json', JSON.stringify(prices));
 }
 exports.writePrices = writePrices;
 
-readPrices=async function(ticker){
+const readPrices=async function(ticker){
     let data =  fs.readFileSync('./bucket/'+ticker+'.json','utf-8');
     console.log(data);
     return JSON.parse(data);
 }
 exports.readPrices=readPrices;
 
-writeAll = async function(tickers, days){
+const writeAll = async function(tickers, days){
     tickers.forEach(async t=>{
         let prices = await priceHistory(t,days);
         writePrices(t,prices);
     });
 }
 exports.writeAll = writeAll;
+

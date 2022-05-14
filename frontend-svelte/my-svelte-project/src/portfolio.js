@@ -1,6 +1,7 @@
 const {baseurl, postfix} = require("./config"); 
 var DataFrame = require('dataframe-js').DataFrame
 const axios = require('axios');
+const _corr = require("calculate-correlation");
 
 
 let sub = function (a,b){
@@ -41,6 +42,10 @@ let getReturns = function (prices){
 }
 exports.getReturns = getReturns;
 
+const corr = function(a,b){
+    return _corr(a,b);
+}
+exports.corr = corr;
 
 
 let hello = function(name){
