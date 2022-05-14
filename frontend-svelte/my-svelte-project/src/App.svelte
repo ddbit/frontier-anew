@@ -38,7 +38,7 @@ let from = ((date) => {
 	</Aum>
 	<br>
 	<div style=
-		"background-color: lightgreen; height:90px; width:100%">
+		"background-color: lightgreen; height:120px; width:100%">
 		<p style="text-align: center;">
 			Frontier(c) by Davide Carboni 2022. <a href="https://digitaldavide.me">digitaldavide.me</a> 
 		

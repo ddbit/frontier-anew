@@ -25,33 +25,21 @@
 
 <div class="portfolio">
     
-    <tr>
-        {#each tickers as t}
-        <td>
-            <AssetCard ticker={t} name={assets[t]}></AssetCard>
-        </td>
-        {/each}
-    </tr>
-    <tr>
-        {#each weights as w, k}
-            <td>
-                <center>
+        {#each tickers as t, k}
+            <div class="card">
+                    <h1>{t}</h1>
+                    <h3>{assets[t]}</h3>  
                     <button on:click={()=>{incr(k,0.25)}}>+</button>
                     <button on:click={()=>{incr(k,-0.25)}}>-</button>
-                    {fmt(w)}
-                </center>
-            </td>
+                    {fmt(weights[k])}                   
+            </div>
         {/each}
-        
-    </tr>
-    <tr>
-        <td>
-            <button on:click={rebalance}>rebalance naive</button>
-        </td>
-    </tr>
+
     
 </div>
-
+<div>
+    <button on:click={rebalance}>rebalance naive</button>
+</div>
 
     <style>
         .portfolio {
@@ -64,5 +52,18 @@
             padding: 30px;
             margin: 0 0 1em 0;
 			min-width:300px;
+            overflow-x: hidden;
+            word-wrap: break-word;
+        }
+
+        .card {
+            width: 20%;
+			float: left;
+            border: 1px solid #aaa;
+            border-radius: 10px;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin: 0 0 1em 0;
+			min-width:150px;
         }
     </style>

@@ -22,9 +22,6 @@
 		{#await response then data}
 			<h1>{ticker}</h1>
 			<h3>{name}</h3>
-			{#if data.prices}
-				<h3>{fmt((data.prices[data.prices.length-1] - data.prices[0])/data.prices[0])}</h3>
-			{/if}
 			{#if chart}
 				<Chart y={data.prices} x={(data.prices===undefined)?undefined:data.prices.map((v,j)=>j - data.prices.length + 1)}></Chart>
 			{/if}
