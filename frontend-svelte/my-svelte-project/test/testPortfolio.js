@@ -71,13 +71,13 @@ describe("portfolio functions", function() {
     it("calculate returns from prices", async function() {
         let prices = [100,110,121]
         expect(getReturns(prices)).to.deep.equal([0.1,0.1,0]);
-        prices = [100,90,81]
-        expect(getReturns(prices)).to.deep.equal([-0.1,-0.1,0]);
+        prices = [100,90,81,89.1];
+        expect(getReturns(prices)).to.deep.equal([-0.1,-0.1,0.1,0]);
     });
 
     it("calculate aum over time from returns", async function() {
-        let returns = [0.05,0.2,0.2];
-        let expectedAUM = [100,105,126];
+        let returns = [-0.1,-0.1,0.1,0];
+        let expectedAUM = [100,90,81,89.1];
         let df=new DataFrame({'return':returns},['return']);
         df = calculateAUM(df,100);
         df.show();
