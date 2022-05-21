@@ -2,10 +2,10 @@
     import { onMount, afterUpdate } from "svelte";
     import Chart from "./Chart.svelte";
     import {calculateGlobalReturns, createPriceDataframe, calculateAUM, createReturnsDataframe} from "./portfolio.js";
-    export let  tickers, weights;
+    export let  tickers, weights, days;
     var data, withReturns, withWeightedReturns, withAum, table=[], aum=[];
-
     let recalculate= function(){
+        
         if(data) {
             withReturns = createReturnsDataframe(data);
             withWeightedReturns = calculateGlobalReturns(withReturns,weights);
@@ -23,7 +23,7 @@
 
     onMount (async () => {
         console.log("before");
-        data = await createPriceDataframe(tickers,weights);
+        data = await createPriceDataframe(tickers,days);
         console.log("after");
     }) ;
     

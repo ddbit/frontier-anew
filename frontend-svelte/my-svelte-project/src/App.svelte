@@ -34,7 +34,8 @@ let from = ((date) => {
 	</p>
 	<Aum name="davide" 
 			tickers={tickers}
-			weights={weights}>
+			weights={weights}
+			days={period}>
 	</Aum>
 	<br>
 	<div style=

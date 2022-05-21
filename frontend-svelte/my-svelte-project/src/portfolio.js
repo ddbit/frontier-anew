@@ -63,9 +63,9 @@ let load = async function(ticker){
 }
 exports.load = load;
 
-let createPriceDataframe = async function(tickers){
+let createPriceDataframe = async function(tickers, days){
     let t = [];
-    let days=60;
+    
         
     for(let i=0;i<days;i++){
         let d=new Date(); 
@@ -89,6 +89,7 @@ let createPriceDataframe = async function(tickers){
 exports.createPriceDataframe = createPriceDataframe;
 
 let createReturnsDataframe = function(priceDataframe){
+    console.log(priceDataframe.toCollection());
     let colNames = priceDataframe.listColumns();
     let returnsDataframe=new DataFrame(priceDataframe);
     returnsDataframe.show();
