@@ -18,7 +18,7 @@ let from = ((date) => {
 
 <main>
 	<div style=
-		"background-color: lightgreen; border-style:dotted; height:100px; width:100%">
+		"background-color: green; border-style:dotted; height:100px; width:100%">
 		<h1 style="text-align: center;">
 			(not yet) Efficient Frontier
 		</h1>
@@ -29,17 +29,18 @@ let from = ((date) => {
 		bind:weights={weights}>
 	</PortfolioCard>
 
-	<p>date range observed {[from.toISOString().substring(0,10),
-		to.toISOString().substring(0,10)]}
-	</p>
+
 	<Aum name="davide" 
 			tickers={tickers}
 			weights={weights}
 			days={period}>
 	</Aum>
+	<div style="text-align: center;">date range {[from.toISOString().substring(0,10),
+		to.toISOString().substring(0,10)]}
+	</div>
 	<br>
 	<div style=
-		"background-color: lightgreen; height:120px; width:100%">
+		"background-color: grey; height:120px; width:100%">
 		<p style="text-align: center;">
 			Frontier(c) by Davide Carboni 2022. <a href="https://digitaldavide.me">digitaldavide.me</a> 
 		
