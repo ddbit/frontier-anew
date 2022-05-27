@@ -18,7 +18,7 @@ let from = ((date) => {
 
 <main>
 	<div style=
-		"background-color: green; border-style:dotted; height:100px; width:100%">
+		"background-color: lightgrey; border-style:dotted; height:100px; width:100%">
 		<h1 style="text-align: center;">
 			(not yet) Efficient Frontier
 		</h1>
@@ -40,7 +40,7 @@ let from = ((date) => {
 	</div>
 	<br>
 	<div style=
-		"background-color: grey; height:120px; width:100%">
+		"background-color: lightgrey; height:120px; width:100%">
 		<p style="text-align: center;">
 			Frontier(c) by Davide Carboni 2022. <a href="https://digitaldavide.me">digitaldavide.me</a> 
 		
