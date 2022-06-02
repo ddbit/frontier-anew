@@ -8,9 +8,14 @@ import Aum from "./Aum.svelte";
 import PortfolioCard from "./PortfolioCard.svelte";
 import {correlationMatrix} from './correlation';
 
-let tickers=["NSPI","BNO","IAU","X:BTCUSD"];
-let names = ["SP500 ETF","Brent Oil Fund","iShares Gold", "Bitcoin"];
-let weights=[0.25,0.25,0.25,0.25];
+let tickers=["NSPI","BNO","IAU","X:BTCUSD","TIP","FXI"];
+let names = ["SP500 ETF",
+			"Brent Oil Fund",
+			"iShares Gold", 
+			"Bitcoin",
+			"iShares TIPS Bond ETF",
+			"iShares China Large-Cap"];
+let weights=Array(6).fill(1/6);
 let returns;
 const period = 90;
 let to = new Date();
@@ -50,6 +55,16 @@ let heatmap=function(matrix){
 			(not yet) Efficient Frontier
 		</h1>
 	</div>
+
+<Aum name="davide" 
+	tickers={tickers}
+	weights={weights}
+	days={period}
+	on:returns={correlationListener}>
+</Aum>
+<div style="text-align: center;">date range {[from.toISOString().substring(0,10),
+to.toISOString().substring(0,10)]}
+</div>
 	<PortfolioCard 
 		names={names}
 		tickers={tickers} 
@@ -57,15 +72,7 @@ let heatmap=function(matrix){
 	</PortfolioCard>
 
 
-	<Aum name="davide" 
-			tickers={tickers}
-			weights={weights}
-			days={period}
-			on:returns={correlationListener}>
-	</Aum>
-	<div style="text-align: center;">date range {[from.toISOString().substring(0,10),
-		to.toISOString().substring(0,10)]}
-	</div>
+
 	<h1>Correlation matrix between tickers</h1>
 	<div id="heatmap">
 		

@@ -29,6 +29,12 @@
 
 </script>
 
+<div >
+    <button on:click={rebalance}>rebalance naive</button>
+    <button on:click={comingSoon}> lowest volatility </button>
+    <button on:click={comingSoon}> highest return </button>
+</div>
+
 <div class="portfolio">
     
         {#each tickers as t, k}
@@ -47,11 +53,6 @@
     
 </div>
 <div>
-    <div >
-        <button on:click={rebalance}>rebalance naive</button>
-        <button on:click={comingSoon}> lowest volatility </button>
-        <button on:click={comingSoon}> highest return </button>
-    </div>
 
 
 </div>
