@@ -15,10 +15,6 @@
 		}
 		
 	}
-	console.log("points");
-	console.log(points);
-	console.log(x);
-	console.log(y);
 	if(points.length==0)points=[{x:0,y:0}];
 	var len = y?y.length:0;
 	var lastY = len>0?y[len-1]:undefined;

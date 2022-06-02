@@ -1,11 +1,17 @@
+<svelte:head>
+	<script src='https://cdn.plot.ly/plotly-2.12.1.min.js'></script>
+</svelte:head>
+
 <script>
 	
 import Aum from "./Aum.svelte";
 import PortfolioCard from "./PortfolioCard.svelte";
+import {correlationMatrix} from './correlation';
+
 let tickers=["NSPI","BNO","IAU","X:BTCUSD"];
 let names = ["SP500 ETF","Brent Oil Fund","iShares Gold", "Bitcoin"];
 let weights=[0.25,0.25,0.25,0.25];
-
+let returns;
 const period = 90;
 let to = new Date();
 let from = ((date) => {
@@ -13,6 +19,27 @@ let from = ((date) => {
         return date;
        }
 )(new Date());
+
+let correlationListener= function(event){
+	returns = event.detail;
+	heatmap(correlationMatrix(returns));
+}
+
+
+let heatmap=function(matrix){
+	var data = [
+  {
+    z: matrix.data,
+    x: matrix.meta,
+    y: matrix.meta,
+    type: 'heatmap',
+    hoverongaps: false
+  }
+];
+
+	Plotly.newPlot('heatmap', data);
+}
+
 
 </script>
 
@@ -33,11 +60,19 @@ let from = ((date) => {
 	<Aum name="davide" 
 			tickers={tickers}
 			weights={weights}
-			days={period}>
+			days={period}
+			on:returns={correlationListener}>
 	</Aum>
 	<div style="text-align: center;">date range {[from.toISOString().substring(0,10),
 		to.toISOString().substring(0,10)]}
 	</div>
+	<h1>Correlation matrix between tickers</h1>
+	<div id="heatmap">
+		
+    </div>
+
+
+
 	<br>
 	<div style=
 		"background-color: lightgrey; height:120px; width:100%">
@@ -55,3 +90,18 @@ let from = ((date) => {
 	</div>
 
 </main>
+
+
+<style>
+	.matrix {
+		width: 30%;
+		float: left;
+		border: 1px solid #aaa;
+		border-radius: 10px;
+		box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+		padding: 15px;
+		margin: 0 0 1em 0;
+		min-width:80px;
+	}
+
+</style>

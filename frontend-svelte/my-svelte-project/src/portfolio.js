@@ -1,10 +1,11 @@
 const {baseurl, postfix} = require("./config"); 
 var DataFrame = require('dataframe-js').DataFrame
 const axios = require('axios');
-const _corr = require("calculate-correlation");
+
 
 
 let sub = function (a,b){
+
     return a.map((e,i) => e - b[i]);
 }
 
@@ -42,10 +43,7 @@ let getReturns = function (prices){
 }
 exports.getReturns = getReturns;
 
-const corr = function(a,b){
-    return _corr(a,b);
-}
-exports.corr = corr;
+
 
 
 let hello = function(name){
@@ -89,10 +87,10 @@ let createPriceDataframe = async function(tickers, days){
 exports.createPriceDataframe = createPriceDataframe;
 
 let createReturnsDataframe = function(priceDataframe){
-    console.log(priceDataframe.toCollection());
+    //console.log(priceDataframe.toCollection());
     let colNames = priceDataframe.listColumns();
     let returnsDataframe=new DataFrame(priceDataframe);
-    returnsDataframe.show();
+    //returnsDataframe.show();
     colNames.forEach(
         colName=>{
             let col = priceDataframe.toDict()[colName];
@@ -141,7 +139,7 @@ let calculateAUM = function(dataframe, initialBalance){
 
     let k=0;
     dataframe=dataframe.withColumn('aum',()=>aum[k++]);
-    dataframe.show();
+    //dataframe.show();
     return dataframe;
 }
 

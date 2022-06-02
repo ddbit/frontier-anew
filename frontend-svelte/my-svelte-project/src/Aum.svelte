@@ -1,19 +1,27 @@
 <script>
     import { onMount, afterUpdate } from "svelte";
     import Chart from "./Chart.svelte";
+    import { createEventDispatcher } from 'svelte';
     import {calculateGlobalReturns, createPriceDataframe, calculateAUM, createReturnsDataframe} from "./portfolio.js";
     export let  tickers, weights, days;
     var data, withReturns, withWeightedReturns, withAum, table=[], aum=[];
+
+    
+	
+	//Declare the dispatch
+	const dispatch = createEventDispatcher();
+
     let recalculate= function(){
         
         if(data) {
             withReturns = createReturnsDataframe(data);
+            dispatch('returns', withReturns);
             withWeightedReturns = calculateGlobalReturns(withReturns,weights);
             withAum = calculateAUM(withWeightedReturns,100);
             table = withAum.toCollection();
             aum = withAum.toDict().aum;
-            console.log("aum");
-            console.log(aum);
+            //console.log("aum");
+            //console.log(aum);
         }
     }
 
@@ -22,13 +30,13 @@
 	}
 
     onMount (async () => {
-        console.log("before");
+        //log("before");
         data = await createPriceDataframe(tickers,days);
-        console.log("after");
+        //console.log("after");
     }) ;
     
     afterUpdate(async () => {
-		console.log('the component just updated');
+		//console.log('the component just updated');
         recalculate();
 	});
 
@@ -41,7 +49,7 @@
     <p>loading ....</p>
 {:then data}
     {#if data}
-        <p>data is ready</p>
+        <h1>Asset under management in portfolio over last {days} days</h1>
         {#key aum}
             <Chart y={aum} x={aum.map((v,j)=>j - aum.length + 1)}></Chart>
         {/key}

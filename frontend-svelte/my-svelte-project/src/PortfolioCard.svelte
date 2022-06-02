@@ -1,5 +1,6 @@
 <script>
-    import AssetCard from "./AssetCard.svelte";
+    
+
 	export let tickers, names, weights;
     let assets={};
 
@@ -38,14 +39,19 @@
                     <button on:click={()=>{incr(k,-0.25)}}>-</button>
                     {fmt(weights[k])}                   
             </div>
+
         {/each}
 
     
 </div>
 <div>
-    <button on:click={rebalance}>rebalance naive</button>
-    <button on:click={comingSoon}> lowest volatility </button>
-    <button on:click={comingSoon}> highest return </button>
+    <div >
+        <button on:click={rebalance}>rebalance naive</button>
+        <button on:click={comingSoon}> lowest volatility </button>
+        <button on:click={comingSoon}> highest return </button>
+    </div>
+
+
 </div>
 
     <style>
@@ -65,12 +71,24 @@
 
         .card {
             width: 30%;
+			/*float: left;*/
+            border: 1px solid #aaa;
+            border-radius: 10px;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            padding: 15px;
+            margin: 0 0 1em 0;
+			min-width:300px;
+        }
+
+        .matrix {
+            width: 30%;
 			float: left;
             border: 1px solid #aaa;
             border-radius: 10px;
             box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
             padding: 15px;
             margin: 0 0 1em 0;
-			min-width:150px;
+			min-width:80px;
         }
+
     </style>
