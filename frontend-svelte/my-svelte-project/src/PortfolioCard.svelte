@@ -37,6 +37,8 @@
                     <span>{assets[t]}</span>  
                     <button on:click={()=>{incr(k,0.25)}}>+</button>
                     <button on:click={()=>{incr(k,-0.25)}}>-</button>
+                    <button on:click={()=>{weights=Array(weights.length).fill(0);weights[k]=1}}>1</button>
+                    <button on:click={()=>{incr(k,-1)}}>0</button>
                     {fmt(weights[k])}                   
             </div>
 
