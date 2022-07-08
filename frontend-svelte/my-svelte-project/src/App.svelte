@@ -32,11 +32,17 @@ let correlationListener= function(event){
 
 
 let heatmap=function(matrix){
+	
+	var meta = [];
+	matrix.meta.forEach(element => {
+		meta.push( element.split("_")[0] );
+	});
+	
 	var data = [
   {
     z: matrix.data,
-    x: matrix.meta,
-    y: matrix.meta,
+    x: meta,
+    y: meta,
     type: 'heatmap',
     hoverongaps: false
   }
@@ -52,19 +58,24 @@ let heatmap=function(matrix){
 	<div style=
 		"background-color: lightgrey; border-style:dotted; height:100px; width:100%">
 		<h1 style="text-align: center;">
-			(not yet) Efficient Frontier
+			Efficient Frontier
 		</h1>
 	</div>
 
-<Aum name="davide" 
-	tickers={tickers}
-	weights={weights}
-	days={period}
-	on:returns={correlationListener}>
-</Aum>
-<div style="text-align: center;">date range {[from.toISOString().substring(0,10),
-to.toISOString().substring(0,10)]}
-</div>
+	<h1>Correlation matrix between tickers</h1>
+	<div id="heatmap">
+		
+    </div>
+
+	<Aum name="davide" 
+		tickers={tickers}
+		weights={weights}
+		days={period}
+		on:returns={correlationListener}>
+	</Aum>
+	<div style="text-align: center;">date range {[from.toISOString().substring(0,10),
+	to.toISOString().substring(0,10)]}
+	</div>
 	<PortfolioCard 
 		names={names}
 		tickers={tickers} 
@@ -73,10 +84,7 @@ to.toISOString().substring(0,10)]}
 
 
 
-	<h1>Correlation matrix between tickers</h1>
-	<div id="heatmap">
-		
-    </div>
+
 
 
 

@@ -1,6 +1,6 @@
 const functions = require("firebase-functions");
 const {readPrices, writeAll} = require("./utils.js");
-const tickers = ["IAU","BNO","X:BTCUSD","NSPI","TIP","FXI"];
+const tickers = ["C:XAUUSD","C:XAGUSD","BNO","X:BTCUSD","SPY","TIP","FXI"];
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
