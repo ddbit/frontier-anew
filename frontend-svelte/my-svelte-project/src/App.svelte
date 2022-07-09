@@ -9,7 +9,12 @@ import PortfolioCard from "./PortfolioCard.svelte";
 import {correlationMatrix} from './correlation';
 
 let tickers=["SPY","NDAQ","BNO","C:XAUUSD","X:BTCUSD","TIP","FXI"];
-let selected=[];
+
+
+function checkBoxListener(ev){
+	console.log(ev);
+}
+
 let names = ["SP 500",
 			"Nasdaq",
 			"Brent Oil Fund",
@@ -33,9 +38,6 @@ let correlationListener= function(event){
 	heatmap(correlationMatrix(returns));
 }
 
-let fmt=function(val){
-		return String(val*100).substring(0,4)+"%";
-}
 
 let assets={};
 
@@ -76,11 +78,12 @@ let heatmap=function(matrix){
             <div class="card">
                     <span>{t}</span>
                     <span>{assets[t]}</span>  
-                    <input type="checkbox" id={t} onclick={console.log} checked>          
+                    <button id={t} onclick={checkBoxListener}>1</button>          
             </div>
         {/each}
 	</div>
-	<h1>Correlation matrix between tickers</h1>
+	
+	
 	<div id="heatmap">
 		
     </div>
