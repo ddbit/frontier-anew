@@ -49,7 +49,7 @@
     <p>loading ....</p>
 {:then data}
     {#if data}
-        <h1>Asset under management in portfolio over last {days} days</h1>
+        <h2>Asset under management in portfolio over last {days} days</h2>
         {#key aum}
             <Chart y={aum} x={aum.map((v,j)=>j - aum.length + 1)}></Chart>
         {/key}

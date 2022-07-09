@@ -8,14 +8,16 @@ import Aum from "./Aum.svelte";
 import PortfolioCard from "./PortfolioCard.svelte";
 import {correlationMatrix} from './correlation';
 
-let tickers=["NSPI","BNO","IAU","X:BTCUSD","TIP","FXI"];
-let names = ["SP500 ETF",
+let tickers=["SPY","NDAQ","BNO","C:XAUUSD","X:BTCUSD","TIP","FXI"];
+let names = ["SP 500",
+			"Nasdaq",
 			"Brent Oil Fund",
-			"iShares Gold", 
+			"Gold", 
 			"Bitcoin",
-			"iShares TIPS Bond ETF",
-			"iShares China Large-Cap"];
-let weights=Array(6).fill(1/6);
+			"US Bonds ETF",
+			"China Corp. ETF"];
+let prettyShortNames=['SP500','NDAQ','OIL','AU','BTC','TIPS','CN-CORP'];
+let weights=Array(tickers.length).fill(1/tickers.length);
 let returns;
 const period = 90;
 let to = new Date();
@@ -33,16 +35,13 @@ let correlationListener= function(event){
 
 let heatmap=function(matrix){
 	
-	var meta = [];
-	matrix.meta.forEach(element => {
-		meta.push( element.split("_")[0] );
-	});
+
 	
 	var data = [
   {
     z: matrix.data,
-    x: meta,
-    y: meta,
+    x: prettyShortNames,
+    y: prettyShortNames,
     type: 'heatmap',
     hoverongaps: false
   }
@@ -76,18 +75,13 @@ let heatmap=function(matrix){
 	<div style="text-align: center;">date range {[from.toISOString().substring(0,10),
 	to.toISOString().substring(0,10)]}
 	</div>
+
+
 	<PortfolioCard 
 		names={names}
 		tickers={tickers} 
 		bind:weights={weights}>
 	</PortfolioCard>
-
-
-
-
-
-
-
 	<br>
 	<div style=
 		"background-color: lightgrey; height:120px; width:100%">
@@ -107,16 +101,3 @@ let heatmap=function(matrix){
 </main>
 
 
-<style>
-	.matrix {
-		width: 30%;
-		float: left;
-		border: 1px solid #aaa;
-		border-radius: 10px;
-		box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-		padding: 15px;
-		margin: 0 0 1em 0;
-		min-width:80px;
-	}
-
-</style>

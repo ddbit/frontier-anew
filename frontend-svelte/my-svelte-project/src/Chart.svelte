@@ -83,7 +83,8 @@
 
 
 <style>
-	.chart, h2, p {
+	.chart {
+		position: relative;
 		width: 100%;
 		max-width: 500px;
 		margin-left: auto;

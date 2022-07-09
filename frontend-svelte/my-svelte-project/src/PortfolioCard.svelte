@@ -83,15 +83,6 @@
 			min-width:300px;
         }
 
-        .matrix {
-            width: 30%;
-			float: left;
-            border: 1px solid #aaa;
-            border-radius: 10px;
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-            padding: 15px;
-            margin: 0 0 1em 0;
-			min-width:80px;
-        }
+
 
     </style>
