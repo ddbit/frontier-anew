@@ -9,6 +9,7 @@ import PortfolioCard from "./PortfolioCard.svelte";
 import {correlationMatrix} from './correlation';
 
 let tickers=["SPY","NDAQ","BNO","C:XAUUSD","X:BTCUSD","TIP","FXI"];
+let selected=[];
 let names = ["SP 500",
 			"Nasdaq",
 			"Brent Oil Fund",
@@ -32,11 +33,17 @@ let correlationListener= function(event){
 	heatmap(correlationMatrix(returns));
 }
 
+let fmt=function(val){
+		return String(val*100).substring(0,4)+"%";
+}
+
+let assets={};
+
+for(let i=0;i<tickers.length;i++){
+	assets[tickers[i]] = names[i]; 
+}
 
 let heatmap=function(matrix){
-	
-
-	
 	var data = [
   {
     z: matrix.data,
@@ -51,6 +58,7 @@ let heatmap=function(matrix){
 }
 
 
+
 </script>
 
 <main>
@@ -61,6 +69,17 @@ let heatmap=function(matrix){
 		</h1>
 	</div>
 
+
+
+	<div class="portfolio">
+        {#each tickers as t, k}
+            <div class="card">
+                    <span>{t}</span>
+                    <span>{assets[t]}</span>  
+                    <input type="checkbox" id={t} onclick={console.log} checked>          
+            </div>
+        {/each}
+	</div>
 	<h1>Correlation matrix between tickers</h1>
 	<div id="heatmap">
 		
@@ -101,3 +120,15 @@ let heatmap=function(matrix){
 </main>
 
 
+<style>
+	    .card {
+            width: 15%;
+			float: left;
+            border: 1px solid #aaa;
+            border-radius: 10px;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            padding: 15px;
+            margin: 0 0 1em 0;
+			min-width:300px;
+        }
+</style>

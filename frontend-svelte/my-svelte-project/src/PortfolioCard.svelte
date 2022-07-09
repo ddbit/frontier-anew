@@ -36,7 +36,6 @@
 </div>
 
 <div class="portfolio">
-    
         {#each tickers as t, k}
             <div class="card">
                     <span>{t}</span>
@@ -49,9 +48,8 @@
             </div>
 
         {/each}
-
-    
 </div>
+
 <div>
 
 
