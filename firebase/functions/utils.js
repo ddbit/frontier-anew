@@ -67,12 +67,23 @@ exports.writeAll = writeAll;
 
 
 
-const { getDatabase, ref, set } = require( "firebase/database" );
+const { Client } = require('pg');
 
-exports.writePriceData = function(ticker, prices, times) {
-  const db = getDatabase();
-  set(ref(db, 'prices/' + ticker), {
-    prices: prices,
-    times: times,
-  });
+
+
+
+
+exports.queryPrices = async function(){
+    // Create a client using the connection information provided on bit.io.
+    var client = new Client({
+        user: 'ddbit',
+        host: 'db.bit.io',
+        database: 'ddbit/prices', // public database 
+        password: 'v2_3tPGg_SB7uJrmJCr6wSETY4HKQmtc', // key from bit.io database page connect menu
+        port: 5432,
+        ssl: true,
+    });
+    client.connect();
+    let res = await client.query('SELECT * FROM "prices" limit 10;');
+    console.log(res);
 }
