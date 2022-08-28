@@ -5,6 +5,8 @@ var {writePrices, readPrices, writeAll} = require("../utils.js");
 
 describe("Utils", function() {
 
+
+    
     it("write/read price history to storage", async function() {
         let obj = {"x":123};
         writePrices("NDAQ",obj);
