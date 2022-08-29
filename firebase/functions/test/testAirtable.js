@@ -9,9 +9,7 @@ describe("Airtable storage operations", function() {
     });
 
     it("select prices from airtable", async function() {
-        
-        query("BNO",3, r=>console.log(r));
-        
+        query("BNO",3, r=>console.log(r)); 
     });
 
 
