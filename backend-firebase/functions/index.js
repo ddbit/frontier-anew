@@ -36,13 +36,13 @@ exports.updateLocalStorage = functions.https.onRequest((request, response) => {
    writeAll(tickers,90).then(_=>response.send({"update":"ok"}));
    //response.send(await stats(ticker));
 });
-
+/*
 exports.updateLocalStorageScheduled = functions.pubsub.schedule('every 1 day').onRun(async (context) => {
    console.log('This will be run every day!');
    response.setHeader("Access-Control-Allow-Origin","*");
    writeAll(tickers,90).then(_=>console.log("update done!"));
  });
- 
+ */
 
 
 
